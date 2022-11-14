@@ -1,8 +1,8 @@
 import "./App.css";
 import Navbar from "./layout/Navbar";
-import SideNavBar from "./layout/SideNavBar";
+import SideNavBar from "./layout/SideNavbar";
 
-function App() {
+const App = () => {
   return (
     <>
       <Navbar />
@@ -10,6 +10,6 @@ function App() {
       <h1 className='text-3xl font-bold underline'>Hello world!</h1>
     </>
   );
-}
+};
 
 export default App;

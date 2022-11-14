@@ -1,3 +1,23 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer components {
+  .sidebar-icon {
+    @apply relative flex items-center justify-center
+            h-14 w-14 mx-auto my-2 
+            rounded-[50%] text-[30px]
+            bg-darkNavsecondary 
+            text-pri_orange 
+            hover:bg-pri_orange
+            hover:text-white
+            hover:rounded-2xl 
+            transition-all duration-300 ease-in  
+            cursor-pointer;
+  }
+}
+.preview {
+  color: #343a46;
+  color: #010409;
+  color: #f62509;
+}

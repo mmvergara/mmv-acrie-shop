@@ -1,18 +1,13 @@
+import { IoMdHome } from "react-icons/io";
+import SidebarIcon from "./components/SidebarIcon";
+
 const SideNavbar: React.FC = () => {
   return (
-    <div className='fixed top-[40px] h-screen bg-slate-600 w-[60px]'>
-      <i>a</i>a<i>b</i>
-      <i>c</i>
-      <i>d</i>
-      <i>e</i>
+    <div className='fixed top-[55px] h-screen bg-darkNavprimary w-[70px]'>
+      <SidebarIcon icon={<IoMdHome />} />
+      <SidebarIcon icon={<IoMdHome />} />
     </div>
   );
 };
-
-
-const SidebarIcon = () => {
-  
-}
-
 
 export default SideNavbar;
