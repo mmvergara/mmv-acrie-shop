@@ -9,7 +9,7 @@ body {
   background-color: #202225;
 }
 main {
-  padding-top: 70px;
+  padding-top: 90px;
 }
 @layer components {
   .sidebar-icon {
@@ -23,6 +23,15 @@ main {
             hover:rounded-2xl 
             transition-all duration-300 ease-in  
             cursor-pointer;
+  }
+  .auth-container {
+    @apply bg-darkNavsecondary text-center min-w-[250px] max-w-[500px] w-[100%] min-h-[300px] mx-3 rounded-md p-2 flex flex-col items-center;
+  }
+  .auth-input {
+    @apply block bg-darkNavprimary p-2 text-lg outline-none my-1 w-[280px] rounded-md;
+  }
+  .auth-button {
+    @apply font-semibold w-[280px] my-1 mt-1 p-2 rounded-sm;
   }
 }
 .preview {

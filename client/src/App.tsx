@@ -1,30 +1,20 @@
 import "./App.css";
 import SideNavBar from "./layout/SideNavbar";
+import { Routes, Route } from "react-router-dom";
+import HomePage from "./pages/HomePage";
+import NotFoundPage from "./pages/NotFoundPage";
+import AuthPage from "./pages/AuthPage";
 
 const App = () => {
   return (
     <>
       <SideNavBar />
       <main>
-        <h1 className='text-3xl font-bold underline'>Hello world!</h1>
-        <h1 className='text-3xl font-bold underline'>Hello world!</h1>
-        <h1 className='text-3xl font-bold underline'>Hello world!</h1>
-        <h1 className='text-3xl font-bold underline'>Hello world!</h1>
-        <h1 className='text-3xl font-bold underline'>Hello world!</h1>
-        <h1 className='text-3xl font-bold underline'>Hello world!</h1>
-        <h1 className='text-3xl font-bold underline'>Hello world!</h1>
-        <h1 className='text-3xl font-bold underline'>Hello world!</h1>
-        <h1 className='text-3xl font-bold underline'>Hello world!</h1>
-        <h1 className='text-3xl font-bold underline'>Hello world!</h1>
-        <h1 className='text-3xl font-bold underline'>Hello world!</h1>
-        <h1 className='text-3xl font-bold underline'>Hello world!</h1>
-        <h1 className='text-3xl font-bold underline'>Hello world!</h1>
-        <h1 className='text-3xl font-bold underline'>Hello world!</h1>
-        <h1 className='text-3xl font-bold underline'>Hello world!</h1>
-        <h1 className='text-3xl font-bold underline'>Hello world!</h1>
-        <h1 className='text-3xl font-bold underline'>Hello world!</h1>
-        <h1 className='text-3xl font-bold underline'>Hello world!</h1>
-        <h1 className='text-3xl font-bold underline'>Hello world!</h1>
+        <Routes>
+          <Route path='/' element={<HomePage />} />
+          <Route path='/auth' element={<AuthPage />} />
+          <Route path='*' element={<NotFoundPage />} />
+        </Routes>
       </main>
     </>
   );

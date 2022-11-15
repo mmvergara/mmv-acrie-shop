@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { IoMdHome } from "react-icons/io";
 import { BiLogInCircle, BiLogOutCircle } from "react-icons/bi";
 import SidebarIcon from "./SidebarIcon";
@@ -14,6 +15,7 @@ const SideNavicons: React.FC<props> = ({ toggleNav }: props) => {
     window.addEventListener("scroll", onScrollEvent);
     return () => window.removeEventListener("scroll", onScrollEvent);
   }, []);
+  const closeNav = () => toggleNav();
 
   return (
     <motion.div
@@ -24,9 +26,15 @@ const SideNavicons: React.FC<props> = ({ toggleNav }: props) => {
       transition={{ duration: 0.3 }}
       className='fixed pt-[65px] z-0 h-screen bg-darkNavprimary w-[70px] '
     >
-      <SidebarIcon icon={<IoMdHome />} />
-      <SidebarIcon icon={<BiLogOutCircle />} />
-      <SidebarIcon icon={<BiLogInCircle />} />
+      <Link to='/' onClick={closeNav}>
+        <SidebarIcon icon={<IoMdHome />} />
+      </Link>
+      <Link to='/auth' onClick={closeNav}>
+        <SidebarIcon icon={<BiLogOutCircle />} />
+      </Link>
+      <Link to='/auth' onClick={closeNav}>
+        <SidebarIcon icon={<BiLogInCircle />} />
+      </Link>
     </motion.div>
   );
 };
