@@ -6,8 +6,14 @@ import expressSession from "express-session";
 import pg_simple from "connect-pg-simple";
 
 import { postgrePool } from "./db/postgre";
-import { EXPESS_SESSION_KEY } from "./config";
+import { EXPESS_SESSION_KEY, PORT } from "./config";
 import table_inits from "./db/tables_init";
+import { userModel } from "./models/userModel";
+
+// Routes
+import authRoutes from './routes/authRoutes'
+
+// Routes
 
 const app = express();
 app.use(cors({ origin: true, credentials: true }));
@@ -34,3 +40,19 @@ app.use(
   })
 );
 // Session
+
+// ROUTES
+app.use("/auth", authRoutes);
+// ROUTES
+
+const port = PORT || 3000
+app.listen(PORT || 3000,()=>{
+  console.log(`Listening to port ${port}`)
+})
+
+
+// (async () => {
+//  const result = await userModel.findById(1)
+//  console.log(result.rows)
+// })()
+

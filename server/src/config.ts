@@ -19,3 +19,6 @@ if (!process.env.SECRET_EXPESS_SESSION_KEY)
   throw new Error("ENV SECRET_KEY_EXPESS_SESSION is undefined");
 
 export const EXPESS_SESSION_KEY = process.env.SECRET_EXPESS_SESSION_KEY;
+
+if (!process.env.PORT) throw new Error("ENV PORT is undefined");
+export const PORT = process.env.PORT;
