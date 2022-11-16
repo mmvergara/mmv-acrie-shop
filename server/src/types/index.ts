@@ -3,4 +3,5 @@ export interface userInfo {
   username:string
   email:string
   password:string
+  userpic_url?:string
 }

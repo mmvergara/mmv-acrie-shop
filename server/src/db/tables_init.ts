@@ -4,13 +4,16 @@ CREATE TABLE IF NOT EXISTS "users"(
   "id" SERIAL PRIMARY KEY,
   "username" VARCHAR(255) NOT NULL,
   "email" VARCHAR(255) NOT NULL,
-  "password" VARCHAR(255) NOT NULL
+  "password" VARCHAR(255) NOT NULL,
+  "userpic_url" TEXT NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS "product"(
   "id" SERIAL PRIMARY KEY,
   "prod_name" VARCHAR(255) NOT NULL,
   "prod_price" INTEGER NOT NULL,
+  "prod_pic_url" TEXT NOT NULL,
+  "prod_description" TEXT NOT NULL,
   "prod_likes" INTEGER NOT NULL,
   "prod_owner" INTEGER NOT NULL,
   "prod_release_date" DATE NOT NULL

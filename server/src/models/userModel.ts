@@ -5,23 +5,34 @@ export class userModel {
   username = "";
   email = "";
   password = "";
+  userpic_url = "";
   id: null | number = null;
   constructor(userInfo: userInfo) {
     this.username = userInfo.username;
     this.email = userInfo.email;
     this.password = userInfo.password;
+    this.userpic_url =
+      userInfo.userpic_url ||
+      "https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y";
     this.id = userInfo.id || null;
   }
 
   async save() {
     if (this.id) {
-      return await postgrePool.query(
-        `UPDATE users SET username = ${this.username}, email = ${this.email}, password = ${this.password} WHERE id = ${this.id}`
-      );
+      //Update usercredentials
+      const q = `UPDATE users SET 
+      username = '${this.username}',
+      email = '${this.email}',
+      password = '${this.password}',
+      userpic_url = '${this.userpic_url}'
+      WHERE id = ${this.id}`;
+      return await postgrePool.query(q);
     } else {
-      return await postgrePool.query(
-        `INSERT INTO users (username,email,password) VALUES (${this.username},${this.email},${this.password})`
-      );
+      console.log("SAVING");
+      //Register
+      const q = `INSERT INTO users (username,email,password,userpic_url) 
+                  VALUES ('${this.username}','${this.email}','${this.password}','${this.userpic_url}')`;
+      return await postgrePool.query(q);
     }
   }
 
@@ -31,14 +42,14 @@ export class userModel {
   }
 
   static async findByEmail(email: string) {
-    return await postgrePool.query(`SELECT * FROM users WHERE email = ${email}`);
+    return await postgrePool.query(`SELECT * FROM users WHERE email = '${email}'`);
   }
 
   static async findByUsername(username: string) {
-    return await postgrePool.query(`SELECT * FROM users WHERE username = ${username}`);
+    return await postgrePool.query(`SELECT * FROM users WHERE username = '${username}'`);
   }
 
   static async findById(id: number) {
-    return await postgrePool.query(`SELECT * FROM users WHERE id = ${id}`);
+    return await postgrePool.query(`SELECT * FROM users WHERE id = '${id}'`);
   }
 }

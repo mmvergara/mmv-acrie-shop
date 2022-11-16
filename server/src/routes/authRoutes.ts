@@ -1,9 +1,10 @@
 import express from 'express'
+import { putSignup } from '../controllers/authController'
 
 const router = express.Router()
 
 
 
-router.get('/signup',)
+router.put('/signup',putSignup)
 
 export default router

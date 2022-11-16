@@ -43,6 +43,8 @@ app.use(
 
 // ROUTES
 app.use("/auth", authRoutes);
+// @ts-ignore
+app.get("/",(req,res,next)=>res.send('hello world'))
 // ROUTES
 
 const port = PORT || 3000
