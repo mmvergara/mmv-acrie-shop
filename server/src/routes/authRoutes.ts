@@ -1,10 +1,11 @@
-import express from 'express'
-import { putSignup } from '../controllers/authController'
+import express from "express";
+import { putSignup, postLogin, testAuth } from "../controllers/authController";
+import isAuth from "../middleware/isAuth";
 
-const router = express.Router()
+const router = express.Router();
 
+router.put("/signup", putSignup);
+router.post("/signin", postLogin);
 
-
-router.put('/signup',putSignup)
-
-export default router
+router.get("/testauth", isAuth, testAuth);
+export default router;

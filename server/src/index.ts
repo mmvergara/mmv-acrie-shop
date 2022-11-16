@@ -11,7 +11,8 @@ import table_inits from "./db/tables_init";
 import { userModel } from "./models/userModel";
 
 // Routes
-import authRoutes from './routes/authRoutes'
+import authRoutes from "./routes/authRoutes";
+import ErrorHandling from "./middleware/ErrorHandling";
 
 // Routes
 
@@ -33,7 +34,7 @@ app.use(
   expressSession({
     name: "acrie-shop-session-store",
     secret: EXPESS_SESSION_KEY,
-    cookie: { maxAge: 1200000, httpOnly: true, secure: true, sameSite: "none" },
+    cookie: { maxAge: 1200000 },
     resave: false,
     saveUninitialized: false,
     store: pgSessionStore,
@@ -42,19 +43,23 @@ app.use(
 // Session
 
 // ROUTES
+
 app.use("/auth", authRoutes);
 // @ts-ignore
-app.get("/",(req,res,next)=>res.send('hello world'))
+app.get("/", (req, res, next) => res.send("hello world"));
+
 // ROUTES
 
-const port = PORT || 3000
-app.listen(PORT || 3000,()=>{
-  console.log(`Listening to port ${port}`)
-})
+//ERROR HANDLING
+app.use(ErrorHandling);
+//ERROR HANDLING
 
+const port = PORT || 3000;
+app.listen(PORT || 3000, () => {
+  console.log(`Listening to port ${port}`);
+});
 
 // (async () => {
 //  const result = await userModel.findById(1)
 //  console.log(result.rows)
 // })()
-

@@ -33,6 +33,10 @@ main {
   .auth-button {
     @apply font-semibold w-[280px] my-1 mt-1 p-2 rounded-sm;
   }
+
+  .card-product {
+    @apply transition-all ease-in rounded-t-md bg-darkNavsecondary flex flex-col w-[260px] h-[300px]  shadow-md hover:scale-105 shadow-black;
+  }
 }
 .preview {
   color: #343a46;

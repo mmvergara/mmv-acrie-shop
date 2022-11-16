@@ -1,13 +1,5 @@
-export interface userInfo {
-  id?:number
-  username:string
-  email:string
-  password:string
-  userpic_url?:string
-}
-
 export interface productDetails {
-  id?: number;
+  id: number;
   prod_name: string;
   prod_owner: string;
   prod_description: string;

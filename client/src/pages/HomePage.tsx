@@ -1,5 +1,7 @@
+import ProductListPage from "./ProductListPage";
+
 const HomePage:React.FC = ()=> {
-  return <><h1>Welcome to Acrie Shop</h1></>
+  return <><ProductListPage/></>
 }
 
 export default HomePage;

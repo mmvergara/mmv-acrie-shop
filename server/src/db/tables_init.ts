@@ -14,7 +14,6 @@ CREATE TABLE IF NOT EXISTS "product"(
   "prod_price" INTEGER NOT NULL,
   "prod_pic_url" TEXT NOT NULL,
   "prod_description" TEXT NOT NULL,
-  "prod_likes" INTEGER NOT NULL,
   "prod_owner" INTEGER NOT NULL,
   "prod_release_date" DATE NOT NULL
 );
