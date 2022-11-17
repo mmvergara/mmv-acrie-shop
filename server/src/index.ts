@@ -34,7 +34,7 @@ app.use(
   expressSession({
     name: "acrie-shop-session-store",
     secret: EXPESS_SESSION_KEY,
-    cookie: { maxAge: 10000 },
+    cookie: { maxAge: 5000 },
     resave: false,
     saveUninitialized: false,
     store: pgSessionStore,

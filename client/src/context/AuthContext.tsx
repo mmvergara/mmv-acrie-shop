@@ -1,36 +1,42 @@
 import { createContext, useContext, useMemo, useState } from "react";
-import { authInfo, userInfo } from "../types";
+import { authContext, authInfo } from "../types";
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
-export const AuthContext = createContext<authInfo | null>(null);
+export const AuthContext = createContext<authContext | null>(null);
 export const useAuth = () => useContext(AuthContext);
 
 export const AuthProvider = ({ children }: { children: JSX.Element | JSX.Element[] }) => {
+  const navigate = useNavigate();
+  const willLogoutInXsec = (sec: number) => console.log("Will logout in ", sec, " seconds");
+
   const handleLogout = () => {
     setUserAuthInfo(null);
+    const userInfoLS = localStorage.getItem("authInfo") || null;
+    if (userInfoLS) {
+      toast.error("Session Expired, Try Logging in again.");
+    }
     localStorage.removeItem("authInfo");
+    navigate("/");
   };
-  // Devv
-  const willLogoutInXsec = (sec: number) => console.log("Will logout in ", sec, " seconds");
-  // Dev
 
   // Get auth info
-  const userInfoLS = localStorage.getItem("authInfo") || null;
-  let parsedUserInfo;
-  if (userInfoLS) {
-    parsedUserInfo = JSON.parse(userInfoLS) as userInfo;
-    const willLogoutIn = parsedUserInfo.TOKEN_EXP_DATE - new Date().getTime();
-    willLogoutInXsec(willLogoutIn / 1000);
+  let authInfo = null;
+  const jsonAuthInfo = localStorage.getItem("authInfo");
+  if (jsonAuthInfo) {
+    authInfo = JSON.parse(jsonAuthInfo) as authInfo;
+    if (!authInfo) return;
+
+    const secondsTillLogout = authInfo.TOKEN_EXP_DATE - new Date().getTime();
+    willLogoutInXsec(secondsTillLogout / 1000);
+
     setTimeout(() => {
-      console.log("LOGEDOUT");
       handleLogout();
-    }, willLogoutIn);
-  } else {
-    console.log("No info");
-    parsedUserInfo = null;
+    }, secondsTillLogout);
   }
 
-  const [userAuthInfo, setUserAuthInfo] = useState<userInfo | null>(parsedUserInfo);
+  // Set auth Info
+  const [userAuthInfo, setUserAuthInfo] = useState<authInfo | null>(authInfo);
   const value = useMemo(() => ({ userAuthInfo, setUserAuthInfo }), [userAuthInfo]);
-  console.log(userAuthInfo);
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };

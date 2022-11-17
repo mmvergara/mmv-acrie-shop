@@ -7,8 +7,8 @@ const SideNavbar: React.FC = () => {
   const toggleNav = () => setNavOpen((prev) => !prev);
   const hideNav = () => setNavOpen(false);
   return (
-    <header>
-      <motion.div className='fixed h-fit w-[70px] z-20 '>
+    <header className="z-50">
+      <motion.div className='fixed h-fit w-[70px] z-50 '>
         <div onClick={toggleNav} className='sidebar-icon'>
           <FaHamburger />
         </div>

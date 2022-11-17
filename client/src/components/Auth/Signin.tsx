@@ -2,31 +2,35 @@ import { authType } from ".";
 import { motion } from "framer-motion";
 import { useFormik } from "formik";
 import { SigninSchema } from "../../utilities/Schemas";
-import axios, { AxiosResponse } from "axios";
 import { useAuth } from "../../context/AuthContext";
-import { userInfo } from "../../types";
-
+import { toast } from "react-toastify";
+import { postLogin } from "../../api/AuthApi";
+import { useNavigate } from "react-router-dom";
 interface props {
   changeMethod: (method: authType) => void;
 }
 const SigninBox: React.FC<props> = ({ changeMethod }: props) => {
   const auth = useAuth();
+  const navigate = useNavigate();
   const changeHandler = () => changeMethod("Signup");
-
   const signInHandler = async () => {
-    const result = (await axios.post("http://localhost:3000/auth/signin", {
-      email: "email",
-      password: "yoyoyo",
-    })) as AxiosResponse<{ userData: userInfo }>;
-    localStorage.setItem('authInfo',JSON.stringify(result.data.userData))
-    auth?.setUserAuthInfo(result.data.userData);
+    const loginData = {
+      email: formik.values.SigninEmail,
+      password: formik.values.SigninPassword,
+    };
+    const result = await postLogin(loginData);
+    // Set authInfo, type == authInfo
+    localStorage.setItem("authInfo", JSON.stringify(result.data.data));
+    auth?.setUserAuthInfo(result.data.data);
+    toast.success("Logged in Successfully");
+    navigate("/");
     return;
   };
 
   const formik = useFormik({
     initialValues: {
-      SigninEmail: "asdasdasd@gasd.com",
-      SigninPassword: "asdasdas",
+      SigninEmail: "salt2@gmail.com",
+      SigninPassword: "salt1234",
     },
     validationSchema: SigninSchema,
     onSubmit: signInHandler,

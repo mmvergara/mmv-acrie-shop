@@ -2,13 +2,21 @@ import { authType } from ".";
 import { motion } from "framer-motion";
 import { SignupSchema } from "../../utilities/Schemas";
 import { useFormik } from "formik";
-
+import { putSignup } from "../../api/AuthApi";
+import { toast } from "react-toastify";
 interface props {
   changeMethod: (method: authType) => void;
 }
 const SignupBox: React.FC<props> = ({ changeMethod }: props) => {
   const changeHandler = () => changeMethod("Signin");
   const signUpHandler = async () => {
+    const signupData = {
+      email: formik.values.SignupEmail,
+      password: formik.values.SignupPassword,
+      username: formik.values.SignupUsername,
+    };
+    const result = await putSignup(signupData);
+    if (result.data.ok) toast.success(result.data.message);
     return;
   };
 
@@ -29,7 +37,7 @@ const SignupBox: React.FC<props> = ({ changeMethod }: props) => {
     >
       <h2 className='text-3xl my-4'>Acrie | Sign up</h2>
       <form onSubmit={formik.handleSubmit} className='mb-4'>
-        <div className="text-red-300">
+        <div className='text-red-300'>
           <p>{formik.touched.SignupUsername && formik.errors.SignupUsername}</p>
           <p>{formik.touched.SignupEmail && formik.errors.SignupEmail}</p>
           <p>{formik.touched.SignupPassword && formik.errors.SignupPassword}</p>
@@ -64,7 +72,7 @@ const SignupBox: React.FC<props> = ({ changeMethod }: props) => {
           type='password'
           placeholder='Password'
         />
-        <button type="submit" className='auth-button mt-2' style={{ backgroundColor: "#53a954" }}>
+        <button type='submit' className='auth-button mt-2' style={{ backgroundColor: "#53a954" }}>
           Create Account
         </button>
       </form>

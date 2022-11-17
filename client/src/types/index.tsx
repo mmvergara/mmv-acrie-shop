@@ -8,13 +8,13 @@ export interface productDetails {
   prod_release_date: string;
 }
 
-export interface userInfo {
+export interface authInfo {
   username: string;
   userpic_url: string;
   TOKEN_EXP_DATE: number;
 }
 
-export interface authInfo {
-  userAuthInfo: userInfo | null;
-  setUserAuthInfo: React.Dispatch<React.SetStateAction<userInfo | null>>;
+export interface authContext {
+  userAuthInfo: authInfo | null;
+  setUserAuthInfo: React.Dispatch<React.SetStateAction<authInfo | null>>;
 }

@@ -25,7 +25,7 @@ const SideNavicons: React.FC<props> = ({ toggleNav }: props) => {
       animate={{ x: 0 }}
       exit={{ x: "-20vw" }}
       transition={{ duration: 0.3 }}
-      className='fixed pt-[65px] z-0 h-screen bg-darkNavprimary w-[70px] '
+      className='fixed pt-[65px] z-20 h-screen bg-darkNavprimary w-[70px] '
     >
       <Link to='/' onClick={closeNav}>
         <SidebarIcon text='Home' icon={<IoMdHome />} />
