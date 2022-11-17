@@ -2,20 +2,31 @@ import { authType } from ".";
 import { motion } from "framer-motion";
 import { useFormik } from "formik";
 import { SigninSchema } from "../../utilities/Schemas";
+import axios, { AxiosResponse } from "axios";
+import { useAuth } from "../../context/AuthContext";
+import { userInfo } from "../../types";
 
 interface props {
   changeMethod: (method: authType) => void;
 }
 const SigninBox: React.FC<props> = ({ changeMethod }: props) => {
+  const auth = useAuth();
   const changeHandler = () => changeMethod("Signup");
+
   const signInHandler = async () => {
+    const result = (await axios.post("http://localhost:3000/auth/signin", {
+      email: "email",
+      password: "yoyoyo",
+    })) as AxiosResponse<{ userData: userInfo }>;
+    localStorage.setItem('authInfo',JSON.stringify(result.data.userData))
+    auth?.setUserAuthInfo(result.data.userData);
     return;
   };
 
   const formik = useFormik({
     initialValues: {
-      SigninEmail: "",
-      SigninPassword: "",
+      SigninEmail: "asdasdasd@gasd.com",
+      SigninPassword: "asdasdas",
     },
     validationSchema: SigninSchema,
     onSubmit: signInHandler,
@@ -27,6 +38,7 @@ const SigninBox: React.FC<props> = ({ changeMethod }: props) => {
       animate={{ opacity: 1, y: 0, scale: 1 }}
       className='auth-container'
     >
+      <h1>{auth?.userAuthInfo?.username || "not authorized"}</h1>
       <h2 className='text-3xl my-4'>Acrie | Sign in</h2>
       <form onSubmit={formik.handleSubmit} className='mb-4'>
         <div className='text-red-300'>

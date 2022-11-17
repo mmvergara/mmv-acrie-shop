@@ -1,17 +1,15 @@
-
 import { Request as req, Response as res, NextFunction as next } from "express";
 import { userModel } from "../models/userModel";
 import { hash, compare } from "bcryptjs";
 import { userInfo } from "../types";
 import newError from "../utilities/newError";
 
-declare module 'express-session' {
+declare module "express-session" {
   interface SessionData {
     isLoggedIn: boolean;
-    userId:number;
+    userId: number;
   }
 }
-
 
 export const putSignup = async (req: req, res: res, next: next) => {
   console.log("SIGNUp");
@@ -32,25 +30,21 @@ export const postLogin = async (req: req, res: res, next: next) => {
     if (!foundUser) throw newError("User does not Exists", 422);
     const passwordComparison = await compare(password, foundUser.password);
     if (!passwordComparison) throw newError("Wrong Password", 422);
+
+    const userData = {
+      username: foundUser.username,
+      userpic_url: foundUser.userpic_url,
+      TOKEN_EXP_DATE:new Date(req.session.cookie.expires!).getTime()
+    };
     req.session.isLoggedIn = true;
-    req.session.userId = foundUser.id; 
-    console.log(req.session)
-    res.status(200).send({ statusCode: 200, message: "Signed in successfully", ok: true });
+    req.session.userId = foundUser.id;
+    res
+      .status(200)
+      .send({ statusCode: 200, message: "Signed in successfully", ok: true, userData });
   } catch (error) {
     next(error);
   }
 };
-
-
-
-
-
-
-
-
-
-
-
 
 export const testAuth = async (req: req, res: res, next: next) => {
   res.status(200).send({ msg: "Goods you are logged in" });
