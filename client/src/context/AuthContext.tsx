@@ -5,17 +5,17 @@ import { useNavigate } from "react-router-dom";
 
 export const AuthContext = createContext<authContext | null>(null);
 export const useAuth = () => useContext(AuthContext);
-
-export const AuthProvider = ({ children }: { children: JSX.Element | JSX.Element[] }) => {
+type props = { children: JSX.Element | JSX.Element[] };
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export const AuthProvider: any = ({ children }: props) => {
   const navigate = useNavigate();
   const willLogoutInXsec = (sec: number) => console.log("Will logout in ", sec, " seconds");
 
-  const handleLogout = () => {
-    setUserAuthInfo(null);
+  const handleLogout = (userDidLogout = false) => {
+    settingUserAuthInfo(null);
     const userInfoLS = localStorage.getItem("authInfo") || null;
-    if (userInfoLS) {
-      toast.error("Session Expired, Try Logging in again.");
-    }
+    if (userInfoLS && !userDidLogout) toast.error("Session Expired, Try Logging in again.");
+
     localStorage.removeItem("authInfo");
     navigate("/");
   };
@@ -25,8 +25,8 @@ export const AuthProvider = ({ children }: { children: JSX.Element | JSX.Element
   const jsonAuthInfo = localStorage.getItem("authInfo");
   if (jsonAuthInfo) {
     authInfo = JSON.parse(jsonAuthInfo) as authInfo;
-    if (!authInfo) return;
 
+    if (!authInfo) return;
     const secondsTillLogout = authInfo.TOKEN_EXP_DATE - new Date().getTime();
     willLogoutInXsec(secondsTillLogout / 1000);
 
@@ -36,7 +36,15 @@ export const AuthProvider = ({ children }: { children: JSX.Element | JSX.Element
   }
 
   // Set auth Info
-  const [userAuthInfo, setUserAuthInfo] = useState<authInfo | null>(authInfo);
+  const [userAuthInfo, settingUserAuthInfo] = useState<authInfo | null>(authInfo);
+  const setUserAuthInfo = (method: "login" | "logout", data?: authInfo) => {
+    if (method === "login" && data) {
+      localStorage.setItem("authInfo", JSON.stringify(data));
+      settingUserAuthInfo(data);
+      return;
+    }
+    handleLogout(true);
+  };
   const value = useMemo(() => ({ userAuthInfo, setUserAuthInfo }), [userAuthInfo]);
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };

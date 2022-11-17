@@ -1,8 +1,7 @@
 import axios, { AxiosError } from "axios";
 import { API_URL } from "../Config";
-import {toast} from 'react-toastify'
+import { toast } from "react-toastify";
 axios.defaults.withCredentials = true;
-
 
 const axiosClient = axios.create({
   withCredentials: true,
@@ -10,7 +9,6 @@ const axiosClient = axios.create({
 });
 
 export const AxiosRequest = async (reqConfig: reqConfig) => {
-
   try {
     const result = await axiosClient(reqConfig);
     console.log(result);
@@ -18,10 +16,10 @@ export const AxiosRequest = async (reqConfig: reqConfig) => {
   } catch (error) {
     const err = error as AxiosError<errResponse>;
     if (err.response) {
-      toast.error(`${err.response.data.message} | ${err.response.data.statusCode}`)
+      toast.error(`${err.response.data.message} | ${err.response.data.statusCode}`);
       return err.response.data;
     }
-    toast.error(`${err.message} | 502`)
+    toast.error(`${err.message} | 502`);
     return { statusCode: 502, message: err.message, ok: false, data: null };
   }
 };

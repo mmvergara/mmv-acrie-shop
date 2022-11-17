@@ -13,5 +13,5 @@ export interface productDetails {
   prod_description: string;
   prod_pic_url: string;
   prod_price: number;
-  prod_release_date:string;
+  prod_release_date?:string;
 }

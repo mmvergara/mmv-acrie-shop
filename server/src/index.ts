@@ -5,16 +5,17 @@ import cookieParser from "cookie-parser";
 import expressSession from "express-session";
 import pg_simple from "connect-pg-simple";
 
+//Middlewares
+import ErrorHandling from "./middleware/ErrorHandling";
+
+// Routes imports
+import authRoutes from "./routes/authRoutes";
+import productRoutes from "./routes/productRoutes";
+
+//Postgre init
 import { postgrePool } from "./db/postgre";
 import { EXPESS_SESSION_KEY, PORT } from "./config";
 import table_inits from "./db/tables_init";
-import { userModel } from "./models/userModel";
-
-// Routes
-import authRoutes from "./routes/authRoutes";
-import ErrorHandling from "./middleware/ErrorHandling";
-
-// Routes
 
 const app = express();
 app.use(cors({ origin: true, credentials: true }));
@@ -34,7 +35,7 @@ app.use(
   expressSession({
     name: "acrie-shop-session-store",
     secret: EXPESS_SESSION_KEY,
-    cookie: { maxAge: 5000 },
+    cookie: { maxAge: 1200000 },
     resave: false,
     saveUninitialized: false,
     store: pgSessionStore,
@@ -43,11 +44,10 @@ app.use(
 // Session
 
 // ROUTES
-
 app.use("/auth", authRoutes);
+app.use("/product", productRoutes);
 // @ts-ignore
 app.get("/", (req, res, next) => res.send("hello world"));
-
 // ROUTES
 
 //ERROR HANDLING
@@ -58,8 +58,3 @@ const port = PORT || 3000;
 app.listen(PORT || 3000, () => {
   console.log(`Listening to port ${port}`);
 });
-
-// (async () => {
-//  const result = await userModel.findById(1)
-//  console.log(result.rows)
-// })()

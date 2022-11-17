@@ -16,5 +16,5 @@ export interface authInfo {
 
 export interface authContext {
   userAuthInfo: authInfo | null;
-  setUserAuthInfo: React.Dispatch<React.SetStateAction<authInfo | null>>;
+  setUserAuthInfo: (method: "login" | "logout", data?: authInfo) => void;
 }

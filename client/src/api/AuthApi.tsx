@@ -20,3 +20,10 @@ export const putSignup = async (signupData: putSignupParams) => {
   })) as AxiosResponse<standardResponse<null>>;
   return result;
 };
+export const postLogout = async () => {
+  const result = (await AxiosRequest({
+    method: "POST",
+    url: "/auth/signout",
+  })) as AxiosResponse<standardResponse<null>>;
+  return result;
+};

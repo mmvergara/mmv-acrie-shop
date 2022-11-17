@@ -1,24 +1,48 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { motion } from "framer-motion";
 import { ProductSchema } from "../../utilities/Schemas";
 import { useFormik } from "formik";
-import { useRef } from "react";
+import { useRef, useState } from "react";
+import { putProduct } from "../../api/ProductApi";
 
 const CreateProduct: React.FC = () => {
+  const [selectedImage, setSelectedImage] = useState<File | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
   const createProductHandler = async () => {
-    return;
+    if (!selectedImage) return;
+    setIsLoading(true);
+    const formData = new FormData();
+    formData.append("image", selectedImage);
+    const data = {
+      prod_name: formik.values.prodName,
+      prod_price: formik.values.prodPrice,
+      prod_description: formik.values.prodDescription,
+    };
+    fetch("https://api.imgbb.com/1/upload?key=47f97e3cdbc68c81f1f141c8042eb2e4", {
+      body: formData,
+      method: "post",
+    })
+      .then((res) => res.json())
+      .then((res) => {
+        console.log(res.data.url);
+        return putProduct({ ...data, prod_pic_url: res.data.url });
+      })
+      .then((res) => {
+        console.log(res);
+        setIsLoading(false);
+      });
   };
 
   const formik = useFormik({
     initialValues: {
       prodName: "",
-      prodPrice: "",
+      prodPrice: 0,
       prodDescription: "",
     },
     validationSchema: ProductSchema,
     onSubmit: createProductHandler,
   });
 
-  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   const prodImgInputRef = useRef<HTMLInputElement>(null!);
   const clickUploadHandler = () => prodImgInputRef.current.click();
   return (
@@ -65,7 +89,14 @@ const CreateProduct: React.FC = () => {
             type='number'
             placeholder='Price'
           />
-          <input type='file' className='hidden' id='productImageInput' ref={prodImgInputRef} />
+          <input
+            type='file'
+            className='hidden'
+            id='productImageInput'
+            accept='image/png, img/jpg, img/jpeg'
+            onChange={(e) => setSelectedImage(e.target.files![0])}
+            ref={prodImgInputRef}
+          />
           <button
             type='button'
             className='auth-button mt-2  bg-gradient-to-r from-orange-500 '
@@ -78,6 +109,7 @@ const CreateProduct: React.FC = () => {
             Submit Product
           </button>
         </form>
+        <b>{isLoading ? "loading" : "notLoading"}</b>
       </motion.div>
     </section>
   );

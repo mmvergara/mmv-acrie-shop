@@ -1,6 +1,6 @@
 import express from "express";
-import { putSignup, postLogin, testAuth, postLogout } from "../controllers/authController";
 import isAuth from "../middleware/isAuth";
+import { putSignup, postLogin, testAuth, postLogout } from "../controllers/authController";
 
 const router = express.Router();
 

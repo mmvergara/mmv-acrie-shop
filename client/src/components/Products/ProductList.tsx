@@ -1,40 +1,32 @@
+import { useState, useEffect } from "react";
+import { getAllProducts } from "../../api/ProductApi";
+import { productDetails } from "../../types";
 import ProductCard from "./ProductCard";
 
 const ProductList: React.FC = () => {
+  const [productList, setProductList] = useState<productDetails[] | []>([]);
+  const fetchAllProduct = async () => {
+    const result = await getAllProducts();
+    setProductList(result.data);
+  };
+  useEffect(() => {
+    fetchAllProduct();
+  }, []);
+
   return (
     <section className='flex w-[100vw] p-2 flex-wrap gap-12  justify-center'>
-      <ProductCard
-        prod_name='sampleproduasdasdasdasdasct'
-        prod_price={200}
-        prod_pic_url='https://cdn.discordapp.com/attachments/1039263662852030475/1042323495461326908/aaa.PNG'
-        transitionSec={1}
-      />{" "}
-      <ProductCard
-        prod_name='sampleproduct'
-        prod_price={200}
-        prod_pic_url='https://cdn.discordapp.com/attachments/901942613815468106/1042333857434837002/image.png'
-        transitionSec={2}
-      />{" "}
-      <ProductCard
-        prod_name='sampleproduct'
-        prod_price={200}
-        prod_pic_url='https://cdn.discordapp.com/attachments/1039263662852030475/1042323495461326908/aaa.PNG'
-        transitionSec={3}
-
-      />
-            <ProductCard
-        prod_name='sampleproduct'
-        prod_price={200}
-        prod_pic_url='https://cdn.discordapp.com/attachments/901942613815468106/1042333857434837002/image.png'
-        transitionSec={4}
-
-      />{" "}      <ProductCard
-        prod_name='sampleproduct'
-        prod_price={200}
-        prod_pic_url='https://cdn.discordapp.com/attachments/901942613815468106/1042333857434837002/image.png'
-        transitionSec={5}
-
-      />{" "}
+      {productList.map((p, i) => {
+        const { prod_name, prod_pic_url, prod_price, id } = p;
+        return (
+          <ProductCard
+            key={id}
+            prod_name={prod_name}
+            prod_price={prod_price}
+            prod_pic_url={prod_pic_url}
+            transitionSec={i + 1}
+          />
+        );
+      })}
     </section>
   );
 };

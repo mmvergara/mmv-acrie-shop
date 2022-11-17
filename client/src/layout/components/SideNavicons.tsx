@@ -5,6 +5,9 @@ import { MdAddCircle } from "react-icons/md";
 import { motion } from "framer-motion";
 import { useEffect } from "react";
 import SidebarIcon from "./SidebarIcon";
+import { postLogout } from "../../api/AuthApi";
+import { useAuth } from "../../context/AuthContext";
+import { toast } from "react-toastify";
 
 interface props {
   toggleNav: () => void;
@@ -16,8 +19,14 @@ const SideNavicons: React.FC<props> = ({ toggleNav }: props) => {
     window.addEventListener("scroll", onScrollEvent);
     return () => window.removeEventListener("scroll", onScrollEvent);
   }, []);
+  const auth = useAuth();
   const closeNav = () => toggleNav();
-
+  const signoutHandler = async () => {
+    const result = await postLogout();
+    auth?.setUserAuthInfo("logout");
+    toast.dark(result.data.message);
+    toggleNav();
+  };
   return (
     <motion.div
       key='sidenavicons'
@@ -30,15 +39,21 @@ const SideNavicons: React.FC<props> = ({ toggleNav }: props) => {
       <Link to='/' onClick={closeNav}>
         <SidebarIcon text='Home' icon={<IoMdHome />} />
       </Link>
-      <Link to='/createproduct' onClick={closeNav}>
-        <SidebarIcon text='Add new Product' icon={<MdAddCircle />} />
-      </Link>
-      <Link to='/auth' onClick={closeNav}>
-        <SidebarIcon text='Sign out' icon={<BiLogOutCircle />} />
-      </Link>
-      <Link to='/auth' onClick={closeNav}>
-        <SidebarIcon text='Sign in' icon={<BiLogInCircle />} />
-      </Link>
+      {auth?.userAuthInfo && (
+        <>
+          <Link to='/createproduct' onClick={closeNav}>
+            <SidebarIcon text='Add new Product' icon={<MdAddCircle />} />
+          </Link>
+          <Link to='/auth' onClick={signoutHandler}>
+            <SidebarIcon text='Sign out' icon={<BiLogOutCircle />} />
+          </Link>
+        </>
+      )}
+      {!auth?.userAuthInfo && (
+        <Link to='/auth' onClick={closeNav}>
+          <SidebarIcon text='Sign in' icon={<BiLogInCircle />} />
+        </Link>
+      )}
     </motion.div>
   );
 };

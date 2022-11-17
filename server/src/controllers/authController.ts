@@ -70,7 +70,7 @@ export const postLogin = async (req: req, res: res, next: next) => {
 };
 
 export const postLogout = async (req: req, res: res, next: next) => {
-  req.session.destroy((err) => {
+  req.session.destroy(() => {
     res
       .status(200)
       .send({ statusCode: 200, message: "Logged out successfully", ok: true, data: null });

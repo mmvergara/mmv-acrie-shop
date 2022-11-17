@@ -13,5 +13,12 @@ export interface standardResponse<data> {
   statusCode: number;
   message: string;
   ok: boolean;
-  data:data;
+  data: data;
+}
+
+export interface putProductParams {
+  prod_name:string;
+  prod_description: string;
+  prod_pic_url: string;
+  prod_price: number;
 }

@@ -1,5 +1,5 @@
-import {CgDetailsMore} from 'react-icons/cg'
-import {BsCartPlusFill} from 'react-icons/bs'
+import { CgDetailsMore } from "react-icons/cg";
+import { BsCartPlusFill } from "react-icons/bs";
 import { motion } from "framer-motion";
 interface ProductCardProps {
   prod_pic_url: string;
@@ -23,10 +23,10 @@ const ProductCard: React.FC<ProductCardProps> = ({
       <div className='rounded-t-md fixed flex justify-center items-center gap-4 flex-col z-10 opacity-0 bg-black min-h-[260px] max-h-[260px] min-w-[260px] max-w-[260px] group-hover:opacity-90 transition-all ease-in'>
         <p className='text-2xl font-semibold'>{prod_price} $</p>
         <button className='border-4 p-2 border-solid rounded-sm border-pri_orange hover:scale-105 transition-all ease-in'>
-          <CgDetailsMore className='inline mb-1'/> View Details
+          <CgDetailsMore className='inline mb-1' /> View Details
         </button>
         <button className='border-4 p-2 border-solid rounded-sm border-pri_orange  hover:scale-105 transition-all ease-in'>
-         <BsCartPlusFill className='inline mb-2'/> Add To Cart{" "}
+          <BsCartPlusFill className='inline mb-2' /> Add To Cart{" "}
         </button>
       </div>
       <img
@@ -36,7 +36,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
       />
 
       <p className='font-semibold text-lg text-center p-2 break-words overflow-hidden'>
-        {prod_name}asdww w w w ewqwe qweqwe asdasdijopasd jopasdopasopdajops
+        {prod_name}
       </p>
     </motion.article>
   );

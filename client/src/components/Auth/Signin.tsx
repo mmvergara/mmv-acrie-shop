@@ -19,9 +19,7 @@ const SigninBox: React.FC<props> = ({ changeMethod }: props) => {
       password: formik.values.SigninPassword,
     };
     const result = await postLogin(loginData);
-    // Set authInfo, type == authInfo
-    localStorage.setItem("authInfo", JSON.stringify(result.data.data));
-    auth?.setUserAuthInfo(result.data.data);
+    auth?.setUserAuthInfo("login", result.data.data);
     toast.success("Logged in Successfully");
     navigate("/");
     return;
