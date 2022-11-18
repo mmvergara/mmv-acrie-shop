@@ -28,7 +28,12 @@ export const putSignup = async (req: req, res: res, next: next) => {
     if (foundSameEmail.rowCount) throw newError("Email already exists", 422);
     if (foundSameUsername.rowCount) throw newError("Username already exists", 422);
 
-    const newUser = new userModel({ username, email, password: encryptedPassword });
+    const newUser = new userModel({
+      username,
+      email,
+      password: encryptedPassword,
+      userpic_url: "https://i.ibb.co/KGdrLDJ/blank-profile-picture-g435c74535-640.png",
+    });
     await newUser.save();
     console.log("User Saved");
     res.status(200).send({ statusCode: 200, message: "Account Created Successfully", ok: true });

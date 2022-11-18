@@ -21,7 +21,8 @@ CREATE TABLE IF NOT EXISTS "product"(
 CREATE TABLE IF NOT EXISTS "cart_products"(
   "id" SERIAL PRIMARY KEY,
   "cart_product_owner" INTEGER NOT NULL,
-  "cart_productid" INTEGER NOT NULL
+  "cart_productid" INTEGER NOT NULL,
+  "cart_product_quantity" INTEGER NOT NULL
 );
 
 ALTER TABLE "cart_products" DROP CONSTRAINT IF EXISTS "cart_products_cart_product_owner_foreign";

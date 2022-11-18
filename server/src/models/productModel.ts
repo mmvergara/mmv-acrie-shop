@@ -23,7 +23,6 @@ export class productModel {
   async save() {
     if (this.id) {
       //Update product details
-      console.log("Updating ", this.prod_name);
       const q = `UPDATE product SET 
       prod_name = '${this.prod_name}' ,
       prod_owner = ${this.prod_owner} ,
@@ -44,6 +43,9 @@ export class productModel {
   }
   static async getAll() {
     return await postgrePool.query(`SELECT * FROM product`);
+  }
+  static async deleteProductByID() {
+
   }
   static async findProdById(prodId: string) {
     return await postgrePool.query(`SELECT * FROM product WHERE id = ${prodId}`);

@@ -8,10 +8,12 @@ import CreateProductPage from "./pages/CreateProductPage";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useAuth } from "./context/AuthContext";
+import DashboardPage from "./pages/DashboardPage";
+import CartsPage from "./pages/CartsPage";
+import MyProductsPage from "./pages/MyProductsPage";
 
 const App = () => {
-
-  const auth = useAuth()
+  const auth = useAuth();
   return (
     <>
       <SideNavBar />
@@ -32,6 +34,9 @@ const App = () => {
           <Route path='/' element={<HomePage />} />
           <Route path='/auth' element={<AuthPage />} />
           {auth?.userAuthInfo && <Route path='/createproduct' element={<CreateProductPage />} />}
+          {auth?.userAuthInfo && <Route path='/dashboard' element={<DashboardPage />} />}
+          {auth?.userAuthInfo && <Route path='/cart' element={<CartsPage/>} />}
+          {auth?.userAuthInfo && <Route path='/myproducts' element={<MyProductsPage/>} />}
           <Route path='*' element={<NotFoundPage />} />
         </Routes>
       </main>

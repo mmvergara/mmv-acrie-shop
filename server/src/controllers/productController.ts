@@ -1,7 +1,7 @@
 import { Request as req, Response as res, NextFunction as next } from "express";
 import { productModel } from "../models/productModel";
 import { userModel } from "../models/userModel";
-import { productDetails, userInfo } from "../types";
+import { productDetails, } from "../types";
 
 export const addProduct = async (req: req, res: res, next: next) => {
   const { prod_name, prod_price, prod_description, prod_pic_url } = req.body;
@@ -22,7 +22,6 @@ export const addProduct = async (req: req, res: res, next: next) => {
 export const getAllProducts = async (req: req, res: res, next: next) => {
   const result = await productModel.getAll();
   const allProducts = result.rows as productDetails[];
-  console.log({ allProducts });
   res
     .status(200)
     .send({
