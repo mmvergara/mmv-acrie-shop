@@ -25,6 +25,7 @@ const ProductList: React.FC = () => {
         return (
           <ProductCard
             key={id}
+            prod_id={id}
             prod_name={prod_name}
             prod_price={prod_price}
             prod_pic_url={prod_pic_url}

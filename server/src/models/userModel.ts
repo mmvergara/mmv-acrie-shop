@@ -28,7 +28,6 @@ export class userModel {
       WHERE id = ${this.id}`;
       return await postgrePool.query(q);
     } else {
-      console.log("SAVING");
       //Register
       const q = `INSERT INTO users (username,email,password,userpic_url) 
                   VALUES ('${this.username}','${this.email}','${this.password}','${this.userpic_url}')`;

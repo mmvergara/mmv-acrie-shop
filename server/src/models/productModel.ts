@@ -34,7 +34,6 @@ export class productModel {
       return await postgrePool.query(q);
     } else {
       //Register
-      console.log("Saving ", this.prod_name);
       const q = `INSERT INTO product (prod_name, prod_owner, prod_description, prod_pic_url, prod_price, prod_release_date) 
       VALUES ('${this.prod_name}','${this.prod_owner}','${this.prod_description}',
       '${this.prod_pic_url}','${this.prod_price}', to_timestamp(${Date.now()} / 1000.0))`;

@@ -10,9 +10,7 @@ const axiosClient = axios.create({
 
 export const AxiosRequest = async (reqConfig: reqConfig) => {
   try {
-    const result = await axiosClient(reqConfig);
-    console.log(result);
-    return result;
+    return await axiosClient(reqConfig);
   } catch (error) {
     const err = error as AxiosError<errResponse>;
     if (err.response) {

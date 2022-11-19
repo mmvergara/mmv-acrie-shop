@@ -6,7 +6,6 @@ const MyProducts: React.FC = () => {
   const [allUserProducts, setAllUserProducts] = useState<productDetails[]>([]);
   const fetchUserProducts = async () => {
     const result = await getUserProducts();
-    console.log(result);
     setAllUserProducts(result.data.data);
   };
   useEffect(() => {
@@ -22,6 +21,7 @@ const MyProducts: React.FC = () => {
             prod_id={id}
             prod_name={prod_name}
             prod_pic_url={prod_pic_url}
+            triggerUpdate={fetchUserProducts}
           />
         );
       })}

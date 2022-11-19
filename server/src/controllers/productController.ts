@@ -31,8 +31,20 @@ export const getAllProducts = async (req: req, res: res, next: next) => {
   });
 };
 
-export const getProductDetail = async (req: req, res: res, next: next) => {
-  const { prodId } = req.body;
+export const getSingleProductById = async (req: req, res: res, next: next) => {
+  const prodId = Number(req.params.prod_id);
+  if (!prodId) next(newError("No Product Id provded", 404));
+
+  const result = await productModel.findProdById(prodId);
+  const prod = result.rows[0] as productDetails;
+  if (result.rowCount === 0) next(newError("Product not Found", 404));
+
+  res.status(200).send({
+    statusCode: 200,
+    message: "All Products fetched",
+    ok: true,
+    data: prod,
+  });
 };
 
 export const getUserProducts = async (req: req, res: res, next: next) => {

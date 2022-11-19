@@ -40,7 +40,6 @@ const SigninBox: React.FC<props> = ({ changeMethod }: props) => {
       animate={{ opacity: 1, y: 0, scale: 1 }}
       className='auth-container'
     >
-      <h1>{auth?.userAuthInfo?.username || "not authorized"}</h1>
       <h2 className='text-3xl my-4'>Acrie | Sign in</h2>
       <form onSubmit={formik.handleSubmit} className='mb-4'>
         <div className='text-red-300'>

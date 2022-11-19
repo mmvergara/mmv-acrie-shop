@@ -1,17 +1,20 @@
 import { CgDetailsMore } from "react-icons/cg";
 import { BsCartPlusFill } from "react-icons/bs";
 import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
 interface ProductCardProps {
   prod_pic_url: string;
   prod_name: string;
   prod_price: number;
   transitionSec: number;
+  prod_id: number;
 }
 const ProductCard: React.FC<ProductCardProps> = ({
   prod_name,
   prod_pic_url,
   prod_price,
   transitionSec,
+  prod_id,
 }: ProductCardProps) => {
   return (
     <motion.article
@@ -22,9 +25,11 @@ const ProductCard: React.FC<ProductCardProps> = ({
     >
       <div className='rounded-t-md fixed flex justify-center items-center gap-4 flex-col z-10 opacity-0 bg-black min-h-[260px] max-h-[260px] min-w-[260px] max-w-[260px] group-hover:opacity-90 transition-all ease-in'>
         <p className='text-2xl font-semibold'>{prod_price} $</p>
-        <button className='border-4 p-2 border-solid rounded-sm border-pri_orange hover:scale-105 transition-all ease-in'>
-          <CgDetailsMore className='inline mb-1' /> View Details
-        </button>
+        <Link to={`/product/${prod_id}`}>
+          <button className='border-4 p-2 border-solid rounded-sm border-pri_orange hover:scale-105 transition-all ease-in'>
+            <CgDetailsMore className='inline mb-1' /> View Details
+          </button>
+        </Link>
         <button className='border-4 p-2 border-solid rounded-sm border-pri_orange  hover:scale-105 transition-all ease-in'>
           <BsCartPlusFill className='inline mb-2' /> Add To Cart{" "}
         </button>

@@ -11,6 +11,7 @@ import { useAuth } from "./context/AuthContext";
 import DashboardPage from "./pages/DashboardPage";
 import CartsPage from "./pages/CartsPage";
 import MyProductsPage from "./pages/MyProductsPage";
+import ProductDetailsPage from "./pages/ProductDetailsPage";
 
 const App = () => {
   const auth = useAuth();
@@ -35,8 +36,9 @@ const App = () => {
           <Route path='/auth' element={<AuthPage />} />
           {auth?.userAuthInfo && <Route path='/createproduct' element={<CreateProductPage />} />}
           {auth?.userAuthInfo && <Route path='/dashboard' element={<DashboardPage />} />}
-          {auth?.userAuthInfo && <Route path='/cart' element={<CartsPage/>} />}
-          {auth?.userAuthInfo && <Route path='/myproducts' element={<MyProductsPage/>} />}
+          {auth?.userAuthInfo && <Route path='/cart' element={<CartsPage />} />}
+          {auth?.userAuthInfo && <Route path='/myproducts' element={<MyProductsPage />} />}
+          {auth?.userAuthInfo && <Route path='/product/:prodId' element={<ProductDetailsPage />} />}
           <Route path='*' element={<NotFoundPage />} />
         </Routes>
       </main>

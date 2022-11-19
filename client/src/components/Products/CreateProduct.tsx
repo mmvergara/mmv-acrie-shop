@@ -32,11 +32,9 @@ const CreateProduct: React.FC = () => {
     })
       .then((res) => res.json())
       .then((res) => {
-        console.log(res.data.url);
         return putProduct({ ...data, prod_pic_url: res.data.url });
       })
-      .then((res) => {
-        console.log(res);
+      .then(() => {
         setPrevImg("");
         setSelectedImage(null);
         setIsLoading(false);
