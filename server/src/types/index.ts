@@ -9,7 +9,7 @@ export interface userInfo {
 export interface productDetails {
   id?: number;
   prod_name: string;
-  prod_owner: string;
+  prod_owner: number;
   prod_description: string;
   prod_pic_url: string;
   prod_price: number;

@@ -22,7 +22,7 @@ const DashboardLinks = () => {
         See Shopping Cart
       </Link>
       <Link
-        to='/myproducts'
+        to='/createproduct'
         className='dashboard-links border-x-2 border-green-600 hover:bg-green-600 hover:border-none'
       >
         <MdAddCircle />

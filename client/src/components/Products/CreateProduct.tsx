@@ -1,15 +1,23 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
+import { toast } from "react-toastify";
 import { motion } from "framer-motion";
 import { ProductSchema } from "../../utilities/Schemas";
 import { useFormik } from "formik";
 import { useRef, useState } from "react";
 import { putProduct } from "../../api/ProductApi";
+import useLoading from "../../hooks/useLoading";
 
 const CreateProduct: React.FC = () => {
   const [selectedImage, setSelectedImage] = useState<File | null>(null);
-  const [isLoading, setIsLoading] = useState(false);
+  const [prevImg, setPrevImg] = useState("");
+
+  const { isLoadingEl, setIsLoading } = useLoading(false, "Creating Product");
+
   const createProductHandler = async () => {
-    if (!selectedImage) return;
+    if (!selectedImage) {
+      toast.error("Please provide an image for the product");
+      return;
+    }
     setIsLoading(true);
     const formData = new FormData();
     formData.append("image", selectedImage);
@@ -29,7 +37,11 @@ const CreateProduct: React.FC = () => {
       })
       .then((res) => {
         console.log(res);
+        setPrevImg("");
+        setSelectedImage(null);
         setIsLoading(false);
+        toast.success("Product Created!");
+        formik.resetForm();
       });
   };
 
@@ -94,7 +106,10 @@ const CreateProduct: React.FC = () => {
             className='hidden'
             id='productImageInput'
             accept='image/png, img/jpg, img/jpeg'
-            onChange={(e) => setSelectedImage(e.target.files![0])}
+            onChange={(e) => {
+              setSelectedImage(e.target.files![0]);
+              setPrevImg(URL.createObjectURL(e.target?.files![0]));
+            }}
             ref={prodImgInputRef}
           />
           <button
@@ -103,13 +118,16 @@ const CreateProduct: React.FC = () => {
             style={{ backgroundColor: "#53a954" }}
             onClick={clickUploadHandler}
           >
-            Add Product Image
+            Add Product Image <br /> (Maintain a 1x1 ratio)
           </button>
+          {prevImg !== "" && (
+            <img src={prevImg} alt='product image selected' width={280} className='mt-4' />
+          )}
           <button type='submit' className='auth-button mt-5' style={{ backgroundColor: "#53a954" }}>
             Submit Product
           </button>
         </form>
-        <b>{isLoading ? "loading" : "notLoading"}</b>
+        <b>{isLoadingEl}</b>
       </motion.div>
     </section>
   );

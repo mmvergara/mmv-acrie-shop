@@ -4,7 +4,7 @@ import { productDetails } from "../types";
 export class productModel {
   id?: number | null = null;
   prod_name: string = "";
-  prod_owner: string = "";
+  prod_owner: number | null = null;
   prod_description: string = "";
   prod_pic_url: string = "";
   prod_price: number = 0;
@@ -44,10 +44,15 @@ export class productModel {
   static async getAll() {
     return await postgrePool.query(`SELECT * FROM product`);
   }
-  static async deleteProductByID() {
 
+  static async getUserProductsByUserId(prod_owner_id: number) {
+    return await postgrePool.query(`SELECT * FROM product WHERE prod_owner = ${prod_owner_id}`);
   }
-  static async findProdById(prodId: string) {
-    return await postgrePool.query(`SELECT * FROM product WHERE id = ${prodId}`);
+  static async deleteProductByID(prod_id: number) {
+    return await postgrePool.query(`DELETE FROM product WHERE id = ${prod_id}`);
+  }
+
+  static async findProdById(prod_id: number) {
+    return await postgrePool.query(`SELECT * FROM product WHERE id = ${prod_id}`);
   }
 }
