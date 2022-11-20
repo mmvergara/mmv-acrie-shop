@@ -4,14 +4,13 @@ import cors from "cors";
 import cookieParser from "cookie-parser";
 import expressSession from "express-session";
 import pg_simple from "connect-pg-simple";
-
 //Middlewares
 import ErrorHandling from "./middleware/ErrorHandling";
 
 // Routes imports
 import authRoutes from "./routes/authRoutes";
 import productRoutes from "./routes/productRoutes";
-import cartProductRoutes from './routes/cartProductRoutes'
+import cartProductRoutes from "./routes/cartProductRoutes";
 
 //Postgre init
 import { postgrePool } from "./db/postgre";
@@ -47,7 +46,7 @@ app.use(
 // ROUTES
 app.use("/auth", authRoutes);
 app.use("/product", productRoutes);
-app.use("/cartproduct",cartProductRoutes)
+app.use("/cartproduct", cartProductRoutes);
 // @ts-ignore
 app.get("/", (req, res, next) => res.send("hello world"));
 // ROUTES
@@ -60,3 +59,4 @@ const port = PORT || 3000;
 app.listen(PORT || 3000, () => {
   console.log(`Listening to port ${port}`);
 });
+

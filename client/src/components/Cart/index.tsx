@@ -5,12 +5,12 @@ import {
   delDecreaseProducttoCart,
   deleteCartItem,
   getUserCartProducts,
-  postCheckout,
   putProducttoCart,
 } from "../../api/CartProductApi";
 import useLoading from "../../hooks/useLoading";
 import { cartproductDetails } from "../../types";
 import CartProduct from "./CartProduct";
+import Checkout from "./sub-components/Checkout";
 
 const CartProducts: React.FC = () => {
   const [cartProductList, setCartProductList] = useState<cartproductDetails[] | []>([]);
@@ -20,23 +20,18 @@ const CartProducts: React.FC = () => {
     false,
     "Updating Cart Products"
   );
-  const checkOutHandler = async () => {
-    const result = await postCheckout();
-    console.log(result)
-    return;
-  };
 
   const fetchAllCartProducts = async () => {
     setIsLoading(true);
-    await updateProducts();
+    await updateCartProducts();
     setIsLoading(false);
     setIsDoneFecthing(true);
   };
-  const updateProducts = async () => {
+  const updateCartProducts = async () => {
     const result = await getUserCartProducts();
     setCartProductList(result.data);
   };
-  const triggerUpdate = async (
+  const triggerAction = async (
     cartItemId: number,
     prod_id: number,
     action: "INCREASE" | "DECREASE" | "DELETE"
@@ -54,7 +49,7 @@ const CartProducts: React.FC = () => {
         toast.success("Product removed from Cart");
         break;
     }
-    await updateProducts();
+    await updateCartProducts();
     setIsLoadingUpdate(false);
     return;
   };
@@ -67,12 +62,6 @@ const CartProducts: React.FC = () => {
       {isLoadingUpdate}
       {isLoadingEl}
       <section className='w-screen flex items-center justify-center flex-col'>
-        <button
-          onClick={checkOutHandler}
-          className='auth-button bg-gradient-to-r from-cyan-500 to-blue-500 hover:scale-105 transition-all ease-in'
-        >
-          Checkout!
-        </button>
         {cartProductList.length === 0 && isDoneFetching && (
           <>
             <p className='text-3xl'> You have no cart Items</p>
@@ -81,6 +70,7 @@ const CartProducts: React.FC = () => {
             </Link>
           </>
         )}
+        {cartProductList.length > 0 && isDoneFetching && <Checkout />}
         {cartProductList.map((prod, i) => {
           return (
             <CartProduct
@@ -90,7 +80,7 @@ const CartProducts: React.FC = () => {
               prod_id={prod.cart_productid}
               prod_name={prod.prod_name}
               prod_pic_url={prod.prod_pic_url}
-              triggerUpdate={triggerUpdate}
+              triggerAction={triggerAction}
               quantity={prod.cart_product_quantity}
               key={prod.cart_productid}
             />

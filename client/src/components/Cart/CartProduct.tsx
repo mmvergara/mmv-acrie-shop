@@ -10,20 +10,20 @@ interface Props {
   quantity: number;
   delay: number;
   prod_price: number;
-  triggerUpdate: (
+  triggerAction: (
     cartItemId: number,
     prod_id: number,
     action: "INCREASE" | "DECREASE" | "DELETE"
   ) => Promise<void>;
 }
 const CartProduct: React.FC<Props> = (props: Props) => {
-  const { delay, prod_name, prod_pic_url, triggerUpdate, cartid, quantity, prod_id, prod_price } =
+  const { delay, prod_name, prod_pic_url, triggerAction, cartid, quantity, prod_id, prod_price } =
     props;
   const initial = delay % 2 === 0 ? { x: 400, opacity: 0 } : { x: -400, opacity: 0 };
 
-  const increaseHandler = () => triggerUpdate(cartid, prod_id, "INCREASE");
-  const decreaseHandler = () => triggerUpdate(cartid, prod_id, "DECREASE");
-  const deleteHandler = () => triggerUpdate(cartid, prod_id, "DELETE");
+  const increaseHandler = () => triggerAction(cartid, prod_id, "INCREASE");
+  const decreaseHandler = () => triggerAction(cartid, prod_id, "DECREASE");
+  const deleteHandler = () => triggerAction(cartid, prod_id, "DELETE");
   return (
     <>
       <motion.article

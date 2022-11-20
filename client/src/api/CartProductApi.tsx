@@ -8,7 +8,7 @@ export const putProducttoCart = async (prodId: number) => {
   return result;
 };
 export const postCheckout = async () => {
-  const result = await AxiosRequest({ method: "POST", url: "/cartproduct/checkout" });
+  const result = await AxiosRequest({ method: "GET", url: "/cartproduct/checkout" });
   return result;
 };
 export const deleteCartItem = async (cartId: number) => {

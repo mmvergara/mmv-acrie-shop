@@ -4,7 +4,7 @@ import newError from "../utilities/newError";
 import { cartProductModel } from "../models/cartProductModel";
 import { productModel } from "../models/productModel";
 import { QueryResult } from "pg";
-import { cartProductDetails } from "../types";
+import { cartProductDetails, cartproductDetailsJoined, productDetails } from "../types";
 
 export const getUserCartByUserId = async (req: req, res: res, next: next) => {
   const userId = req.session.userId!;
@@ -95,11 +95,25 @@ export const decreaseProductQuantity = async (req: req, res: res, next: next) =>
 export const postCheckout = async (req: req, res: res, next: next) => {
   const userId = req.session.userId!;
   const foundUser = await userModel.findById(userId);
-
   try {
     if (foundUser.rowCount === 0) throw newError("User does not exists", 404);
     const result = await cartProductModel.getUserCartByUserId(userId);
-    const cartProducts = result.rows;
+    const cartProducts = result.rows as cartproductDetailsJoined[];
+    const totalPrice = cartProducts
+      .map((p) => p.prod_price * p.cart_product_quantity)
+      .reduce((a, b) => a + b);
+    const minifiedCartProducts = cartProducts.map((p) => {
+      const { prod_name, prod_price, cart_product_quantity } = p;
+      return { prod_name, prod_price, quantity: cart_product_quantity };
+    });
+
+    const data = {
+      cartProducts: minifiedCartProducts,
+      totalPrice,
+      orderid: `${foundUser.rows[0].username}-${new Date().getTime().toString()}`,
+    };
+    console.log(data);
+
     res.status(200).send({ data: cartProducts });
   } catch (error) {
     next(error);
