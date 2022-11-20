@@ -14,14 +14,18 @@ const LandingPage: React.FC = () => {
         <h1 className='text-3xl mb-4'>Welcome to Acrie Shop</h1>
         <p className='mb-4'>
           Acrie Shop is a web app made by: Vergara, Mark Matthew. <br /> Simulating a E-commerce
-          website to practice <br /> React w/TS, NodeJS w/TS, Tailwind CSS, Framer Motion and most
-          importantly PostgreSQL without using any ORM like Sequalize. <br /> It features self-made
-          models for the database queries.
+          website to practice <br /> <br />React w/TS, NodeJS w/TS, PDFKit, Image APIS&quot;s,<br /> Tailwind CSS,
+          Framer Motion<br /> and most importantly PostgreSQL<br /><br /> without using any ORM like Sequalize. <br />{" "}
+          It features self-made models for the database queries.
         </p>
         <Link to='/auth'>
-          <button className='auth-button bg-pri_orange'>Login</button>
+          <button className='auth-button bg-pri_orange hover:scale-105 transition-all ease-in'>
+            Login
+          </button>
         </Link>
-        <button className='auth-button bg-purple-500'>Developer Docs</button>
+        <button className='auth-button bg-purple-500 hover:scale-105 transition-all ease-in'>
+          Developer Docs
+        </button>
       </article>
     </motion.section>
   );

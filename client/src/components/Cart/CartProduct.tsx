@@ -9,6 +9,7 @@ interface Props {
   prod_pic_url: string;
   quantity: number;
   delay: number;
+  prod_price: number;
   triggerUpdate: (
     cartItemId: number,
     prod_id: number,
@@ -16,7 +17,8 @@ interface Props {
   ) => Promise<void>;
 }
 const CartProduct: React.FC<Props> = (props: Props) => {
-  const { delay, prod_name, prod_pic_url, triggerUpdate, cartid, quantity, prod_id } = props;
+  const { delay, prod_name, prod_pic_url, triggerUpdate, cartid, quantity, prod_id, prod_price } =
+    props;
   const initial = delay % 2 === 0 ? { x: 400, opacity: 0 } : { x: -400, opacity: 0 };
 
   const increaseHandler = () => triggerUpdate(cartid, prod_id, "INCREASE");
@@ -35,7 +37,9 @@ const CartProduct: React.FC<Props> = (props: Props) => {
           <p className='break-words overflow-hidden text-md'>{prod_name}</p>
         </div>
         <div className='flex gap-2 sm:gap-4 w-[100%] ml-auto justify-end'>
-          <p className='text-sm'>Quantity: {quantity}</p>
+          <p className='text-sm'>
+            Quantity: {quantity} | Total Price ${quantity * prod_price}
+          </p>
           <p
             onClick={decreaseHandler}
             className='text-red-600 cursor-pointer group hover:scale-110'

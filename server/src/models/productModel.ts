@@ -48,6 +48,7 @@ export class productModel {
     return await postgrePool.query(`SELECT * FROM product WHERE prod_owner = ${prod_owner_id}`);
   }
   static async deleteProductByID(prod_id: number) {
+    await postgrePool.query(`DELETE FROM cart_products WHERE cart_productid = ${prod_id}`);
     return await postgrePool.query(`DELETE FROM product WHERE id = ${prod_id}`);
   }
 

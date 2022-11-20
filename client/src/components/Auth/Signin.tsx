@@ -66,14 +66,14 @@ const SigninBox: React.FC<props> = ({ changeMethod }: props) => {
           type='password'
           placeholder='Password'
         />
-        <button type='submit' className='auth-button bg-pri_orange mt-2'>
+        <button type='submit' className='auth-button bg-pri_orange mt-2 hover:scale-105 transition-all ease-in'>
           Sign in
         </button>
       </form>
       New here?
       <button
         onClick={changeHandler}
-        className='auth-button mb-4'
+        className='auth-button mb-4 hover:scale-105 transition-all ease-in'
         style={{ backgroundColor: "#53a954" }}
       >
         Create Account

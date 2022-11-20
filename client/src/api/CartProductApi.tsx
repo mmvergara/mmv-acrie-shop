@@ -7,16 +7,25 @@ export const putProducttoCart = async (prodId: number) => {
   const result = await AxiosRequest({ method: "PUT", url: `/cartproduct/add?prod_id=${prodId}` });
   return result;
 };
+export const postCheckout = async () => {
+  const result = await AxiosRequest({ method: "POST", url: "/cartproduct/checkout" });
+  return result;
+};
+export const deleteCartItem = async (cartId: number) => {
+  const result = await AxiosRequest({
+    method: "DELETE",
+    url: `/cartproduct/delete?cart_id=${cartId}`,
+  });
+  return result;
+};
 
-export const deleteCartItem= async (cartId:number) => {
-  const result = await AxiosRequest({method:'DELETE',url:`/cartproduct/delete?cart_id=${cartId}`})
-  return result
-}
-
-export const delDecreaseProducttoCart = async (cartId:number)  => {
-  const result = await AxiosRequest({method:'DELETE',url:`/cartproduct/decrease?cart_id=${cartId}`})
-  return result
-}
+export const delDecreaseProducttoCart = async (cartId: number) => {
+  const result = await AxiosRequest({
+    method: "DELETE",
+    url: `/cartproduct/decrease?cart_id=${cartId}`,
+  });
+  return result;
+};
 
 export const getUserCartProducts = async () => {
   const result = (await AxiosRequest({ method: "GET", url: "/cartproduct/all" })) as AxiosResponse<

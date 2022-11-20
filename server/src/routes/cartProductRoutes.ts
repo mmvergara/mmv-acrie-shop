@@ -13,5 +13,6 @@ router.put("/add", isAuth, putProducttoCart);
 router.get("/all", isAuth, getUserCartByUserId);
 router.delete("/decrease", isAuth, decreaseProductQuantity);
 router.delete("/delete", isAuth,deleteProducttoCart);
+router.post("/checkout",isAuth)
 
 export default router;

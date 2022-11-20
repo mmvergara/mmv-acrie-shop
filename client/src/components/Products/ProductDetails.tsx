@@ -1,30 +1,41 @@
 import { useState, useEffect } from "react";
 import { ImPriceTags } from "react-icons/im";
 import { MdDateRange } from "react-icons/md";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { getSingleProductById } from "../../api/ProductApi";
 import { productDetails } from "../../types";
 import { motion } from "framer-motion";
+import { toast } from "react-toastify";
+import { putProducttoCart } from "../../api/CartProductApi";
+import useLoading from "../../hooks/useLoading";
 
 const ProductDetails: React.FC = () => {
   const { prodId } = useParams();
   const [prod, setProd] = useState<productDetails | null>(null);
+  const { isLoadingEl, setIsLoading } = useLoading(true, "Getting Product Details");
   const fetchSingleProductDetail = async () => {
     const prod = await getSingleProductById(Number(prodId));
     setProd(prod.data);
+    setIsLoading(false);
   };
+
+  const addToCartHandler = async () => {
+    await putProducttoCart(Number(prodId));
+    toast.success("Product Added To Cart");
+  };
+
   useEffect(() => {
     fetchSingleProductDetail();
   }, []);
-  if (!prod) return <h1>Loading</h1>;
+  if (!prod) return <>{isLoadingEl}</>;
   const { prod_description, prod_name, prod_pic_url, prod_price, prod_release_date } = prod;
 
   return (
     <motion.section
       animate={{
         opacity: [0, 1],
-        rotateX: [150, 360],
-        rotateY: [150, 360],
+        rotateX: [340, 360],
+        rotateY: [340, 360],
       }}
       className=' mx-auto flex align-center justify-center p-2'
     >
@@ -49,7 +60,12 @@ const ProductDetails: React.FC = () => {
               {prod_price} $
             </p>
           </div>
-          <button className='auth-button bg-pri_orange'>Add To Cart</button>
+          <button onClick={addToCartHandler} className='auth-button bg-pri_orange hover:scale-105 transition-all ease-in'>
+            Add To Cart
+          </button>
+          <Link to='/'>
+            <button className='auth-button bg-darkNavsecondary hover:scale-105 transition-all ease-in'>Go Back to Shop</button>
+          </Link>
         </div>
       </article>
     </motion.section>

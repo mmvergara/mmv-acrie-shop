@@ -72,12 +72,12 @@ const SignupBox: React.FC<props> = ({ changeMethod }: props) => {
           type='password'
           placeholder='Password'
         />
-        <button type='submit' className='auth-button mt-2' style={{ backgroundColor: "#53a954" }}>
+        <button type='submit' className='auth-button mt-2 hover:scale-105 transition-all ease-in' style={{ backgroundColor: "#53a954" }}>
           Create Account
         </button>
       </form>
       Already have an account?
-      <button onClick={changeHandler} className='auth-button bg-pri_orange mb-4'>
+      <button onClick={changeHandler} className='auth-button bg-pri_orange mb-4 hover:scale-105 transition-all ease-in'>
         Sign in
       </button>
     </motion.div>

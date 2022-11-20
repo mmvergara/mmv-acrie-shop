@@ -5,6 +5,7 @@ import {
   delDecreaseProducttoCart,
   deleteCartItem,
   getUserCartProducts,
+  postCheckout,
   putProducttoCart,
 } from "../../api/CartProductApi";
 import useLoading from "../../hooks/useLoading";
@@ -19,9 +20,15 @@ const CartProducts: React.FC = () => {
     false,
     "Updating Cart Products"
   );
+  const checkOutHandler = async () => {
+    const result = await postCheckout();
+    console.log(result)
+    return;
+  };
+
   const fetchAllCartProducts = async () => {
     setIsLoading(true);
-    updateProducts();
+    await updateProducts();
     setIsLoading(false);
     setIsDoneFecthing(true);
   };
@@ -29,7 +36,6 @@ const CartProducts: React.FC = () => {
     const result = await getUserCartProducts();
     setCartProductList(result.data);
   };
-
   const triggerUpdate = async (
     cartItemId: number,
     prod_id: number,
@@ -61,16 +67,25 @@ const CartProducts: React.FC = () => {
       {isLoadingUpdate}
       {isLoadingEl}
       <section className='w-screen flex items-center justify-center flex-col'>
-        {cartProductList.length === 0 && isDoneFetching && <>
-          <p className="text-3xl"> You have no cart Items</p>
-          <Link to='/'>
-          <button className="bg-pri_orange font-semibold p-4 mt-4">Shop Now!</button>
-          </Link>
-        </>}
+        <button
+          onClick={checkOutHandler}
+          className='auth-button bg-gradient-to-r from-cyan-500 to-blue-500 hover:scale-105 transition-all ease-in'
+        >
+          Checkout!
+        </button>
+        {cartProductList.length === 0 && isDoneFetching && (
+          <>
+            <p className='text-3xl'> You have no cart Items</p>
+            <Link to='/'>
+              <button className='bg-pri_orange font-semibold p-4 mt-4'>Shop Now!</button>
+            </Link>
+          </>
+        )}
         {cartProductList.map((prod, i) => {
           return (
             <CartProduct
               delay={i + 1}
+              prod_price={prod.prod_price}
               cartid={prod.cartid}
               prod_id={prod.cart_productid}
               prod_name={prod.prod_name}

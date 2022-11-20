@@ -10,7 +10,7 @@ import useLoading from "../../hooks/useLoading";
 const CreateProduct: React.FC = () => {
   const [selectedImage, setSelectedImage] = useState<File | null>(null);
   const [prevImg, setPrevImg] = useState("");
-
+  const [isUploading, setIsUploading] = useState(false);
   const { isLoadingEl, setIsLoading } = useLoading(false, "Creating Product");
 
   const createProductHandler = async () => {
@@ -18,6 +18,7 @@ const CreateProduct: React.FC = () => {
       toast.error("Please provide an image for the product");
       return;
     }
+    setIsUploading(true);
     setIsLoading(true);
     const formData = new FormData();
     formData.append("image", selectedImage);
@@ -38,6 +39,7 @@ const CreateProduct: React.FC = () => {
         setPrevImg("");
         setSelectedImage(null);
         setIsLoading(false);
+        setIsUploading(false);
         toast.success("Product Created!");
         formik.resetForm();
       });
@@ -124,8 +126,13 @@ const CreateProduct: React.FC = () => {
           <button type='submit' className='auth-button mt-5' style={{ backgroundColor: "#53a954" }}>
             Submit Product
           </button>
+          {isUploading && (
+            <p className='w-[275px] text-center'>
+              We are using a free img api to upload images, it might take a while{" "}
+            </p>
+          )}
         </form>
-        <b>{isLoadingEl}</b>
+        {isLoadingEl}
       </motion.div>
     </section>
   );

@@ -42,6 +42,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
       </div>
       <img
         src={prod_pic_url}
+        loading='lazy'
         alt={prod_name || "product iamge"}
         className='min-h-[260px] max-h-[260px] min-w-[260px] max-w-[260px] rounded-t-md'
       />
