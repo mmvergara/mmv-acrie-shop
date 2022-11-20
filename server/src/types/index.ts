@@ -15,3 +15,9 @@ export interface productDetails {
   prod_price: number;
   prod_release_date?:string;
 }
+export interface cartProductDetails {
+  id:number
+  cart_product_owner:number
+  cart_productid:number
+  cart_product_quantity:number
+}

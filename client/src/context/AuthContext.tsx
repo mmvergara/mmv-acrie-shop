@@ -18,7 +18,6 @@ export const AuthProvider: any = ({ children }: props) => {
     settingUserAuthInfo(null);
     const userInfoLS = localStorage.getItem("authInfo") || null;
     if (userInfoLS && !userDidLogout) toast.error("Session Expired, Try Logging in again.");
-
     localStorage.removeItem("authInfo");
     navigate("/");
   };
@@ -28,7 +27,6 @@ export const AuthProvider: any = ({ children }: props) => {
   const jsonAuthInfo = localStorage.getItem("authInfo");
   if (jsonAuthInfo) {
     authInfo = JSON.parse(jsonAuthInfo) as authInfo;
-
     if (!authInfo) return;
     const secondsTillLogout = authInfo.TOKEN_EXP_DATE - new Date().getTime();
     willLogoutInXsec(secondsTillLogout / 1000);

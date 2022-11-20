@@ -1,3 +1,16 @@
+export interface cartproductDetails {
+  id: number;
+  prod_name: string;
+  prod_owner: string;
+  prod_description: string;
+  prod_pic_url: string;
+  prod_price: number;
+  prod_release_date: string;
+  cartid:number
+  cart_product_owner: number
+  cart_productid: number
+  cart_product_quantity: number
+}
 export interface productDetails {
   id: number;
   prod_name: string;
@@ -7,7 +20,6 @@ export interface productDetails {
   prod_price: number;
   prod_release_date: string;
 }
-
 export interface authInfo {
   username: string;
   userpic_url: string;

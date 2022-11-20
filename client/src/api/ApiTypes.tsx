@@ -22,3 +22,4 @@ export interface putProductParams {
   prod_pic_url: string;
   prod_price: number;
 }
+

@@ -8,6 +8,7 @@ interface ProductCardProps {
   prod_price: number;
   transitionSec: number;
   prod_id: number;
+  addToCart: (prodId: number) => Promise<void>;
 }
 const ProductCard: React.FC<ProductCardProps> = ({
   prod_name,
@@ -15,7 +16,9 @@ const ProductCard: React.FC<ProductCardProps> = ({
   prod_price,
   transitionSec,
   prod_id,
+  addToCart,
 }: ProductCardProps) => {
+  const addToCartHandler = () => addToCart(prod_id);
   return (
     <motion.article
       initial={{ x: -200, opacity: 0 }}
@@ -30,7 +33,10 @@ const ProductCard: React.FC<ProductCardProps> = ({
             <CgDetailsMore className='inline mb-1' /> View Details
           </button>
         </Link>
-        <button className='border-4 p-2 border-solid rounded-sm border-pri_orange  hover:scale-105 transition-all ease-in'>
+        <button
+          onClick={addToCartHandler}
+          className='border-4 p-2 border-solid rounded-sm border-pri_orange  hover:scale-105 transition-all ease-in'
+        >
           <BsCartPlusFill className='inline mb-2' /> Add To Cart{" "}
         </button>
       </div>

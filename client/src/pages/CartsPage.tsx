@@ -1,5 +1,3 @@
-const CartsPage:React.FC = ()=> {
-  return <></>
-}
-
+import CartProducts from "../components/Cart";
+const CartsPage:React.FC = ()=> <CartProducts/>
 export default CartsPage;

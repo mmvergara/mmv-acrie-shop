@@ -2,36 +2,26 @@ import { RiDeleteBin6Fill } from "react-icons/ri";
 import { CgDetailsMore } from "react-icons/cg";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
-import useLoading from "../../../hooks/useLoading";
-import { deleteProductById } from "../../../api/ProductApi";
 interface props {
   prod_id: number;
   prod_name: string;
   prod_pic_url: string;
   delay: number;
-  triggerUpdate: () => Promise<void>;
+  triggerDelete: (prod_id: number) => Promise<void>;
 }
 const MyProduct: React.FC<props> = ({
   prod_id,
   prod_name,
   prod_pic_url,
   delay,
-  triggerUpdate,
+  triggerDelete,
 }: props) => {
-  const { isLoadingEl, setIsLoading } = useLoading(false, "Deleting Product");
-  const deleteProductByIdHandler = async (prod_id: number) => {
-    setIsLoading(true);
-    await deleteProductById(prod_id);
-    triggerUpdate();
-    setIsLoading(false);
-  };
-
   const deleteHandler = () => deleteProductByIdHandler(prod_id);
+  const deleteProductByIdHandler = async (prod_id: number) => await triggerDelete(prod_id);
 
   const initial = delay % 2 === 0 ? { x: 400, opacity: 0 } : { x: -400, opacity: 0 };
   return (
     <>
-      {isLoadingEl}
       <motion.article
         initial={initial}
         animate={{ x: 0, opacity: 1 }}

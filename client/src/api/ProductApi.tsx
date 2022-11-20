@@ -1,4 +1,4 @@
-import { AxiosRequestConfig, AxiosResponse } from "axios";
+import { AxiosResponse } from "axios";
 import { productDetails } from "../types";
 import { putProductParams, standardResponse } from "./ApiTypes";
 import { AxiosRequest } from "./AxiosInterceptor";
@@ -29,5 +29,5 @@ export const getSingleProductById = async (prod_id: number) => {
     method: "GET",
     url: `/product/details/${prod_id}`,
   })) as AxiosResponse<standardResponse<productDetails>>;
-  return result.data
+  return result.data;
 };

@@ -11,6 +11,7 @@ import ErrorHandling from "./middleware/ErrorHandling";
 // Routes imports
 import authRoutes from "./routes/authRoutes";
 import productRoutes from "./routes/productRoutes";
+import cartProductRoutes from './routes/cartProductRoutes'
 
 //Postgre init
 import { postgrePool } from "./db/postgre";
@@ -46,6 +47,7 @@ app.use(
 // ROUTES
 app.use("/auth", authRoutes);
 app.use("/product", productRoutes);
+app.use("/cartproduct",cartProductRoutes)
 // @ts-ignore
 app.get("/", (req, res, next) => res.send("hello world"));
 // ROUTES
