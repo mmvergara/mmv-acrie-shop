@@ -1,12 +1,20 @@
 import { useState, useEffect } from "react";
-import { delDecreaseProducttoCart, getUserCartProducts, putProducttoCart } from "../../api/CartProductApi";
+import { Link } from "react-router-dom";
+import { toast } from "react-toastify";
+import {
+  delDecreaseProducttoCart,
+  deleteCartItem,
+  getUserCartProducts,
+  putProducttoCart,
+} from "../../api/CartProductApi";
 import useLoading from "../../hooks/useLoading";
 import { cartproductDetails } from "../../types";
 import CartProduct from "./CartProduct";
 
 const CartProducts: React.FC = () => {
   const [cartProductList, setCartProductList] = useState<cartproductDetails[] | []>([]);
-  const { isLoadingEl, setIsLoading } = useLoading(false, "Getting Cart Products");
+  const [isDoneFetching, setIsDoneFecthing] = useState<boolean>(false);
+  const { isLoadingEl, setIsLoading } = useLoading(true, "Getting Cart Products");
   const { isLoadingEl: isLoadingUpdate, setIsLoading: setIsLoadingUpdate } = useLoading(
     false,
     "Updating Cart Products"
@@ -15,6 +23,7 @@ const CartProducts: React.FC = () => {
     setIsLoading(true);
     updateProducts();
     setIsLoading(false);
+    setIsDoneFecthing(true);
   };
   const updateProducts = async () => {
     const result = await getUserCartProducts();
@@ -26,24 +35,24 @@ const CartProducts: React.FC = () => {
     prod_id: number,
     action: "INCREASE" | "DECREASE" | "DELETE"
   ) => {
-    setIsLoadingUpdate(true)
+    setIsLoadingUpdate(true);
     switch (action) {
       case "INCREASE":
         await putProducttoCart(prod_id);
         break;
       case "DECREASE":
-        await delDecreaseProducttoCart(cartItemId)
+        await delDecreaseProducttoCart(cartItemId);
         break;
       case "DELETE":
+        await deleteCartItem(cartItemId);
+        toast.success("Product removed from Cart");
         break;
     }
     await updateProducts();
-    setIsLoadingUpdate(false)
+    setIsLoadingUpdate(false);
     return;
   };
-
   useEffect(() => {
-    console.log("USEEFEFECT CARRT");
     fetchAllCartProducts();
   }, []);
 
@@ -52,6 +61,12 @@ const CartProducts: React.FC = () => {
       {isLoadingUpdate}
       {isLoadingEl}
       <section className='w-screen flex items-center justify-center flex-col'>
+        {cartProductList.length === 0 && isDoneFetching && <>
+          <p className="text-3xl"> You have no cart Items</p>
+          <Link to='/'>
+          <button className="bg-pri_orange font-semibold p-4 mt-4">Shop Now!</button>
+          </Link>
+        </>}
         {cartProductList.map((prod, i) => {
           return (
             <CartProduct

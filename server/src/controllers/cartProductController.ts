@@ -14,7 +14,6 @@ export const getUserCartByUserId = async (req: req, res: res, next: next) => {
     if (foundUser.rowCount === 0) throw newError("User does not exists", 404);
     const result = await cartProductModel.getUserCartByUserId(userId);
     const cartProducts = result.rows;
-    console.log(cartProducts);
     res.status(200).send({ data: cartProducts });
   } catch (error) {}
 };
@@ -55,7 +54,18 @@ export const putProducttoCart = async (req: req, res: res, next: next) => {
 };
 
 export const deleteProducttoCart = async (req: req, res: res, next: next) => {
-  const userId = req.session.userId;
+  const cart_id = Number(req.query.cart_id);
+  const findCartProductIfExists = await cartProductModel.findCartByCartId(cart_id);
+  const existingCartProd = findCartProductIfExists.rows[0] as cartProductDetails;
+  try {
+    if (!existingCartProd) throw newError("Cart Product Item does not exists", 404);
+    const result = await cartProductModel.deleteCartByCartId(existingCartProd.id);
+    res
+      .status(200)
+      .send({ statusCode: 200, message: "Cart item Deleted", ok: true, data: result.command });
+  } catch (error) {
+    next(error);
+  }
 };
 
 export const decreaseProductQuantity = async (req: req, res: res, next: next) => {

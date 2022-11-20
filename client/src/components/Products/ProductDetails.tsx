@@ -11,7 +11,6 @@ const ProductDetails: React.FC = () => {
   const [prod, setProd] = useState<productDetails | null>(null);
   const fetchSingleProductDetail = async () => {
     const prod = await getSingleProductById(Number(prodId));
-    console.log(prod.data);
     setProd(prod.data);
   };
   useEffect(() => {

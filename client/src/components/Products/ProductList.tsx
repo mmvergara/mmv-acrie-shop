@@ -1,8 +1,9 @@
 import { useState, useEffect } from "react";
+import { toast } from "react-toastify";
 import { putProducttoCart } from "../../api/CartProductApi";
-import { getAllProducts, putProduct } from "../../api/ProductApi";
-import useLoading from "../../hooks/useLoading";
+import { getAllProducts } from "../../api/ProductApi";
 import { productDetails } from "../../types";
+import useLoading from "../../hooks/useLoading";
 import ProductCard from "./ProductCard";
 
 const ProductList: React.FC = () => {
@@ -19,7 +20,10 @@ const ProductList: React.FC = () => {
     setIsLoading(false);
   };
   const addToCart = async (prodId: number) => {
-    const result = await putProducttoCart(prodId);
+    setIsLoadingCart(true);
+    await putProducttoCart(prodId);
+    toast.success("Added Product to Cart");
+    setIsLoadingCart(false);
     return;
   };
   useEffect(() => {
@@ -28,6 +32,7 @@ const ProductList: React.FC = () => {
 
   return (
     <>
+      {isLoadingCart}
       {isLoadingEl}
       <section className='flex w-[100vw] p-2 flex-wrap gap-12  justify-center'>
         {productList.map((p, i) => {

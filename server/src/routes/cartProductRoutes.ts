@@ -1,6 +1,7 @@
 import express from "express";
 import {
   decreaseProductQuantity,
+  deleteProducttoCart,
   getUserCartByUserId,
   putProducttoCart,
 } from "../controllers/cartProductController";
@@ -11,6 +12,6 @@ const router = express.Router();
 router.put("/add", isAuth, putProducttoCart);
 router.get("/all", isAuth, getUserCartByUserId);
 router.delete("/decrease", isAuth, decreaseProductQuantity);
-router.delete("/delete", isAuth);
+router.delete("/delete", isAuth,deleteProducttoCart);
 
 export default router;
