@@ -31,6 +31,8 @@ const pgSessionStore = new pgSession({
   createTableIfMissing: true,
 });
 postgrePool.query(table_inits);
+
+app.set("trust proxy", 1);
 app.use(
   expressSession({
     name: "acrie-shop-session-store",
