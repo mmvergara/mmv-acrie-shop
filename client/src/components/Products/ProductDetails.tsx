@@ -15,12 +15,14 @@ const ProductDetails: React.FC = () => {
   const { isLoadingEl, setIsLoading } = useLoading(true, "Getting Product Details");
   const fetchSingleProductDetail = async () => {
     const prod = await getSingleProductById(Number(prodId));
-    setProd(prod.data);
     setIsLoading(false);
+    if (!prod.ok) return;
+    setProd(prod.data);
   };
 
   const addToCartHandler = async () => {
-    await putProducttoCart(Number(prodId));
+    const result = await putProducttoCart(Number(prodId));
+    if (!result.ok) return;
     toast.success("Product Added To Cart");
   };
 
@@ -29,7 +31,7 @@ const ProductDetails: React.FC = () => {
   }, []);
   if (!prod) return <>{isLoadingEl}</>;
   const { prod_description, prod_name, prod_pic_url, prod_price, prod_release_date } = prod;
-
+  const release_date = new Date(prod_release_date).toISOString().slice(0, 10);
   return (
     <motion.section
       animate={{
@@ -52,19 +54,23 @@ const ProductDetails: React.FC = () => {
             <p className='text-4xl'>{prod_name}</p>
             <p className='text-2xl mb-4'> {prod_description}</p>
             <p className='text-2xl flex items-center gap-2 justify-center'>
-              <MdDateRange className='text-red-500' />{" "}
-              {new Date(prod_release_date).toISOString().slice(0, 10)}
+              <MdDateRange className='text-red-500' /> {release_date}
             </p>
             <p className='text-2xl flex items-center gap-2 justify-center my-2'>
               <ImPriceTags className='text-green-500' />
               {prod_price} $
             </p>
           </div>
-          <button onClick={addToCartHandler} className='auth-button bg-pri_orange hover:scale-105 transition-all ease-in'>
+          <button
+            onClick={addToCartHandler}
+            className='auth-button bg-pri_orange hover:scale-105 transition-all ease-in'
+          >
             Add To Cart
           </button>
           <Link to='/'>
-            <button className='auth-button bg-darkNavsecondary hover:scale-105 transition-all ease-in'>Go Back to Shop</button>
+            <button className='auth-button bg-darkNavsecondary hover:scale-105 transition-all ease-in'>
+              Go Back to Shop
+            </button>
           </Link>
         </div>
       </article>

@@ -2,7 +2,6 @@ export interface postLoginParams {
   email: string;
   password: string;
 }
-
 export interface putSignupParams {
   email: string;
   password: string;

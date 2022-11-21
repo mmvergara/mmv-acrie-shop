@@ -4,7 +4,12 @@ import { putProductParams, standardResponse } from "./ApiTypes";
 import { AxiosRequest } from "./AxiosInterceptor";
 
 export const putProduct = async (newProduct: putProductParams) => {
-  return await AxiosRequest({ method: "PUT", url: "/product/create", data: newProduct });
+  const result = (await AxiosRequest({
+    method: "PUT",
+    url: "/product/create",
+    data: newProduct,
+  })) as AxiosResponse<standardResponse<null>>;
+  return result.data;
 };
 
 export const deleteProductById = async (prod_id: number) => {
@@ -15,7 +20,7 @@ export const getUserProducts = async () => {
     method: "GET",
     url: `/product/userproducts`,
   })) as AxiosResponse<standardResponse<productDetails[]>>;
-  return result;
+  return result.data;
 };
 export const getAllProducts = async () => {
   const result = (await AxiosRequest({ method: "GET", url: "/product/all" })) as AxiosResponse<

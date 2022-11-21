@@ -26,7 +26,6 @@ const ChangeAvatar: React.FC = () => {
     setIsLoading(true);
     const formData = new FormData();
     formData.append("image", selectedImage);
-
     fetch("https://api.imgbb.com/1/upload?key=47f97e3cdbc68c81f1f141c8042eb2e4", {
       body: formData,
       method: "post",

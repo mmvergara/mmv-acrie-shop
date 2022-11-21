@@ -1,13 +1,11 @@
-import { authType } from ".";
+import { authProps } from ".";
 import { motion } from "framer-motion";
 import { SignupSchema } from "../../utilities/Schemas";
 import { useFormik } from "formik";
 import { putSignup } from "../../api/AuthApi";
 import { toast } from "react-toastify";
-interface props {
-  changeMethod: (method: authType) => void;
-}
-const SignupBox: React.FC<props> = ({ changeMethod }: props) => {
+
+const SignupBox: React.FC<authProps> = ({ changeMethod }: authProps) => {
   const changeHandler = () => changeMethod("Signin");
   const signUpHandler = async () => {
     const signupData = {
@@ -16,12 +14,9 @@ const SignupBox: React.FC<props> = ({ changeMethod }: props) => {
       username: formik.values.SignupUsername,
     };
     const result = await putSignup(signupData);
-    if (result.data.ok) {
-      toast.success(result.data.message);
-      changeMethod('Signin')
-    }
-
-    return;
+    if (!result.ok) return;
+    toast.success(result.message);
+    changeMethod("Signin");
   };
 
   const formik = useFormik({

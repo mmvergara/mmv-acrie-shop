@@ -16,8 +16,9 @@ const ProductList: React.FC = () => {
   const fetchAllProduct = async () => {
     setIsLoading(true);
     const result = await getAllProducts();
-    setProductList(result.data);
     setIsLoading(false);
+    if (!result.ok) return;
+    setProductList(result.data);
   };
   const addToCart = async (prodId: number) => {
     setIsLoadingCart(true);

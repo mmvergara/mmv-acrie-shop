@@ -16,6 +16,7 @@ const MyProduct: React.FC<props> = ({
   delay,
   triggerDelete,
 }: props) => {
+  
   const deleteHandler = () => deleteProductByIdHandler(prod_id);
   const deleteProductByIdHandler = async (prod_id: number) => await triggerDelete(prod_id);
 

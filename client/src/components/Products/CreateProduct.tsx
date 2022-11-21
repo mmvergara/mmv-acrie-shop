@@ -35,11 +35,12 @@ const CreateProduct: React.FC = () => {
       .then((res) => {
         return putProduct({ ...data, prod_pic_url: res.data.url });
       })
-      .then(() => {
-        setPrevImg("");
-        setSelectedImage(null);
+      .then((res) => {
         setIsLoading(false);
         setIsUploading(false);
+        if (!res.ok) return;
+        setPrevImg("");
+        setSelectedImage(null);
         toast.success("Product Created!");
         formik.resetForm();
       });

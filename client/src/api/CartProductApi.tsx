@@ -5,7 +5,7 @@ import { AxiosRequest } from "./AxiosInterceptor";
 
 export const putProducttoCart = async (prodId: number) => {
   const result = await AxiosRequest({ method: "PUT", url: `/cartproduct/add?prod_id=${prodId}` });
-  return result;
+  return result.data;
 };
 
 export const postCheckout = async () => {
@@ -21,7 +21,7 @@ export const deleteCartItem = async (cartId: number) => {
     method: "DELETE",
     url: `/cartproduct/delete?cart_id=${cartId}`,
   });
-  return result;
+  return result.data;
 };
 
 export const delDecreaseProducttoCart = async (cartId: number) => {
@@ -29,7 +29,7 @@ export const delDecreaseProducttoCart = async (cartId: number) => {
     method: "DELETE",
     url: `/cartproduct/decrease?cart_id=${cartId}`,
   });
-  return result;
+  return result.data;
 };
 
 export const getUserCartProducts = async () => {

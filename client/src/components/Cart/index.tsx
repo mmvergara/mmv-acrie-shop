@@ -29,10 +29,12 @@ const CartProducts: React.FC = () => {
     setIsDoneFecthing(true);
   };
   const updateCartProducts = async (isCheckout?: boolean) => {
-    if (isCheckout) {
-      setDoneCheckout(true);
-    }
+    if (isCheckout) setDoneCheckout(true);
     const result = await getUserCartProducts();
+    if (!result.ok) {
+      setCartProductList([]);
+      return;
+    }
     setCartProductList(result.data);
   };
   const triggerAction = async (
@@ -66,11 +68,13 @@ const CartProducts: React.FC = () => {
       {isLoadingUpdate}
       {isLoadingEl}
       <section className='w-screen flex items-center justify-center flex-col'>
-        {cartProductList.length === 0 && isDoneFetching && !checkoutDone &&(
+        {cartProductList.length === 0 && isDoneFetching && !checkoutDone && (
           <>
             <p className='text-3xl'> You have no cart Items</p>
             <Link to='/'>
-              <button className='bg-pri_orange font-semibold p-4 mt-4  hover:scale-105 transition-all ease-in'>Shop Now!</button>
+              <button className='bg-pri_orange font-semibold p-4 mt-4  hover:scale-105 transition-all ease-in'>
+                Shop Now!
+              </button>
             </Link>
           </>
         )}

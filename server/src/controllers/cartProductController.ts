@@ -4,7 +4,7 @@ import newError from "../utilities/newError";
 import { cartProductModel } from "../models/cartProductModel";
 import { productModel } from "../models/productModel";
 import { QueryResult } from "pg";
-import { cartProductDetails, cartproductDetailsJoined, productDetails } from "../types";
+import { cartProductDetails, cartproductDetailsJoined } from "../types";
 
 export const getUserCartByUserId = async (req: req, res: res, next: next) => {
   const userId = req.session.userId!;
@@ -119,7 +119,7 @@ export const postCheckout = async (req: req, res: res, next: next) => {
 
     //Delete user cart items
     await cartProductModel.deleteUserCartItemsByUserId(userId);
-    
+
     res.status(200).send({ statusCode: 200, message: "Checkout Successfull", ok: true, data });
   } catch (error) {
     next(error);

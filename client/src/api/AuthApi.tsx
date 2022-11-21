@@ -9,7 +9,7 @@ export const postLogin = async (loginData: postLoginParams) => {
     url: "/auth/signin",
     data: loginData,
   })) as AxiosResponse<standardResponse<authInfo>>;
-  return result;
+  return result.data;
 };
 
 export const putSignup = async (signupData: putSignupParams) => {
@@ -18,14 +18,14 @@ export const putSignup = async (signupData: putSignupParams) => {
     url: "/auth/signup",
     data: signupData,
   })) as AxiosResponse<standardResponse<null>>;
-  return result;
+  return result.data;
 };
 export const postLogout = async () => {
   const result = (await AxiosRequest({
     method: "POST",
     url: "/auth/signout",
   })) as AxiosResponse<standardResponse<null>>;
-  return result;
+  return result.data;
 };
 
 export const patchUserAvatar = async (data: patchAvatarParams) => {
@@ -34,6 +34,5 @@ export const patchUserAvatar = async (data: patchAvatarParams) => {
     url: "/auth/changeavatar",
     data,
   })) as AxiosResponse<standardResponse<null>>;
-  console.log(result.data);
   return result.data;
 };

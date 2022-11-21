@@ -33,8 +33,15 @@ export const putSignup = async (req: req, res: res, next: next) => {
       password: encryptedPassword,
       userpic_url: "https://i.ibb.co/KGdrLDJ/blank-profile-picture-g435c74535-640.png",
     });
-    await newUser.save();
-    res.status(200).send({ statusCode: 200, message: "Account Created Successfully", ok: true });
+    const result = await newUser.save();
+    res
+      .status(200)
+      .send({
+        statusCode: 200,
+        message: "Account Created Successfully",
+        ok: true,
+        data: result.command,
+      });
   } catch (error) {
     next(error);
   }

@@ -1,4 +1,4 @@
-import { authType } from ".";
+import { authProps } from ".";
 import { motion } from "framer-motion";
 import { useFormik } from "formik";
 import { SigninSchema } from "../../utilities/Schemas";
@@ -6,20 +6,20 @@ import { useAuth } from "../../context/AuthContext";
 import { toast } from "react-toastify";
 import { postLogin } from "../../api/AuthApi";
 import { useNavigate } from "react-router-dom";
-interface props {
-  changeMethod: (method: authType) => void;
-}
-const SigninBox: React.FC<props> = ({ changeMethod }: props) => {
+
+const SigninBox: React.FC<authProps> = ({ changeMethod }: authProps) => {
   const auth = useAuth();
   const navigate = useNavigate();
   const changeHandler = () => changeMethod("Signup");
+
   const signInHandler = async () => {
     const loginData = {
       email: formik.values.SigninEmail,
       password: formik.values.SigninPassword,
     };
     const result = await postLogin(loginData);
-    auth?.setUserAuthInfo("login", result.data.data);
+    if (!result.ok) return;
+    auth?.setUserAuthInfo("login", result.data);
     toast.success("Logged in Successfully");
     navigate("/");
     return;
@@ -66,7 +66,10 @@ const SigninBox: React.FC<props> = ({ changeMethod }: props) => {
           type='password'
           placeholder='Password'
         />
-        <button type='submit' className='auth-button bg-pri_orange mt-2 hover:scale-105 transition-all ease-in'>
+        <button
+          type='submit'
+          className='auth-button bg-pri_orange mt-2 hover:scale-105 transition-all ease-in'
+        >
           Sign in
         </button>
       </form>

@@ -17,14 +17,14 @@ const Checkout: React.FC<props> = ({ triggerUpdate }: props) => {
   const checkOutHandler = async () => {
     setStatus("Creating Order...");
     const result = await postCheckout();
-    if (!result.data) return;
-    const pdf = createCheckoutPDF(result.data);
-    setPdf(pdf);
+    if (result.ok) {
+      const pdf = createCheckoutPDF(result.data);
+      setPdf(pdf);
+      setShowDownload(true);
+      toast.success("Checkout Success!");
+      triggerUpdate(true);
+    }
     setStatus("Checkout!");
-    setShowDownload(true);
-    toast.success("Checkout Success!");
-    triggerUpdate(true);
-
     return;
   };
 
@@ -49,7 +49,9 @@ const Checkout: React.FC<props> = ({ triggerUpdate }: props) => {
           </motion.button>
           <h2 className='text-3xl text-center'>Thank you for Shopping with Acie Shop!</h2>
           <Link to='/'>
-            <button className='bg-pri_orange font-semibold p-4 mt-4 hover:scale-105 transition-all ease-in'>Shop Again!</button>
+            <button className='bg-pri_orange font-semibold p-4 mt-4 hover:scale-105 transition-all ease-in'>
+              Shop Again!
+            </button>
           </Link>
         </>
       ) : (

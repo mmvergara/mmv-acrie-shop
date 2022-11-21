@@ -5,19 +5,26 @@ import { productDetails } from "../../types";
 import MyProduct from "./sub-components/MyProduct";
 const MyProducts: React.FC = () => {
   const { isLoadingEl, setIsLoading } = useLoading(true, "Fetching Products");
-  const { isLoadingEl:isLoadingDel, setIsLoading:setIsLoadingDel } = useLoading(false, "Deleting Product");
+  const { isLoadingEl: isLoadingDel, setIsLoading: setIsLoadingDel } = useLoading(
+    false,
+    "Deleting Product"
+  );
   const [allUserProducts, setAllUserProducts] = useState<productDetails[]>([]);
   const fetchUserProducts = async () => {
     setIsLoading(true);
     const result = await getUserProducts();
-    setAllUserProducts(result.data.data);
     setIsLoading(false);
+    if (!result.ok) {
+      setAllUserProducts([]);
+      return;
+    }
+    setAllUserProducts(result.data);
   };
 
   const deleteProductByIdHandler = async (prod_id: number) => {
     setIsLoadingDel(true);
     await deleteProductById(prod_id);
-    await fetchUserProducts()
+    await fetchUserProducts();
     setIsLoadingDel(false);
   };
 

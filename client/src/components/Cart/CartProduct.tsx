@@ -19,11 +19,12 @@ interface Props {
 const CartProduct: React.FC<Props> = (props: Props) => {
   const { delay, prod_name, prod_pic_url, triggerAction, cartid, quantity, prod_id, prod_price } =
     props;
-  const initial = delay % 2 === 0 ? { x: 400, opacity: 0 } : { x: -400, opacity: 0 };
 
   const increaseHandler = () => triggerAction(cartid, prod_id, "INCREASE");
   const decreaseHandler = () => triggerAction(cartid, prod_id, "DECREASE");
   const deleteHandler = () => triggerAction(cartid, prod_id, "DELETE");
+  
+  const initial = delay % 2 === 0 ? { x: 400, opacity: 0 } : { x: -400, opacity: 0 };
   return (
     <>
       <motion.article

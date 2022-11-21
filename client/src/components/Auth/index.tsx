@@ -1,7 +1,6 @@
 import { useState } from "react";
 import SigninBox from "./Signin";
 import SignupBox from "./Signup";
-
 export type authType = "Signin" | "Signup";
 
 const Auth: React.FC = () => {
@@ -15,5 +14,9 @@ const Auth: React.FC = () => {
     </section>
   );
 };
+
+export interface authProps {
+  changeMethod: (method: authType) => void;
+}
 
 export default Auth;

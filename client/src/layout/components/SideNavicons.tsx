@@ -26,7 +26,7 @@ const SideNavicons: React.FC<props> = ({ toggleNav }: props) => {
   const signoutHandler = async () => {
     const result = await postLogout();
     auth?.setUserAuthInfo("logout");
-    toast.dark(result.data.message);
+    toast.dark(result.message);
     toggleNav();
   };
   return (
@@ -42,7 +42,7 @@ const SideNavicons: React.FC<props> = ({ toggleNav }: props) => {
         <Link to='/dashboard' onClick={closeNav}>
           <div className='sidebar-icon group bg-none'>
             <img
-              src={auth.userAuthInfo.userpic_url || 'https://i.ibb.co/BBD7sZQ/aaa.png'}
+              src={auth.userAuthInfo.userpic_url || "https://i.ibb.co/BBD7sZQ/aaa.png"}
               alt='user'
               className='sidebar-icon group-hover:rounded-2xl bg-none'
             />
