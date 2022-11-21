@@ -1,4 +1,4 @@
-# MMV Acrie Shop - 
+# MMV Acrie Shop
 
 Acrie Shop is a web app made by: Vergara, Mark Matthew.
 Simulating a E-commerce website to practice React w/TS, NodeJS w/TS, jsPDF, Image APIS"s,
