@@ -23,7 +23,7 @@ export const AxiosRequest = async (reqConfig: reqConfig) => {
 };
 
 interface reqConfig {
-  method: "POST" | "GET" | "PUT" | "DELETE";
+  method: "POST" | "GET" | "PUT" | "DELETE" | "PATCH";
   url: string;
   data?: unknown;
 }

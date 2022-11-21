@@ -14,7 +14,9 @@ export const getUserCartByUserId = async (req: req, res: res, next: next) => {
     if (foundUser.rowCount === 0) throw newError("User does not exists", 404);
     const result = await cartProductModel.getUserCartByUserId(userId);
     const cartProducts = result.rows;
-    res.status(200).send({ data: cartProducts });
+    res
+      .status(200)
+      .send({ statusCode: 200, message: "User Cart Fetched", ok: true, data: cartProducts });
   } catch (error) {
     next(error);
   }
@@ -98,6 +100,8 @@ export const postCheckout = async (req: req, res: res, next: next) => {
   try {
     if (foundUser.rowCount === 0) throw newError("User does not exists", 404);
     const result = await cartProductModel.getUserCartByUserId(userId);
+
+    // Prepare Checkout Data to be sent
     const cartProducts = result.rows as cartproductDetailsJoined[];
     const totalPrice = cartProducts
       .map((p) => p.prod_price * p.cart_product_quantity)
@@ -112,9 +116,11 @@ export const postCheckout = async (req: req, res: res, next: next) => {
       totalPrice,
       orderid: `${foundUser.rows[0].username}-${new Date().getTime().toString()}`,
     };
-    console.log(data);
 
-    res.status(200).send({ data: cartProducts });
+    //Delete user cart items
+    await cartProductModel.deleteUserCartItemsByUserId(userId);
+    
+    res.status(200).send({ statusCode: 200, message: "Checkout Successfull", ok: true, data });
   } catch (error) {
     next(error);
   }

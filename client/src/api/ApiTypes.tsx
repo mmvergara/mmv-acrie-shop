@@ -8,6 +8,10 @@ export interface putSignupParams {
   password: string;
   username: string;
 }
+export interface patchAvatarParams {
+  password: string | undefined;
+  user_pic_url: string;
+}
 
 export interface standardResponse<data> {
   statusCode: number;
@@ -17,9 +21,18 @@ export interface standardResponse<data> {
 }
 
 export interface putProductParams {
-  prod_name:string;
+  prod_name: string;
   prod_description: string;
   prod_pic_url: string;
   prod_price: number;
 }
 
+export interface checkoutDetails {
+  cartProducts: {
+    prod_name: string;
+    prod_price: number;
+    quantity: number;
+  }[];
+  orderid: string;
+  totalPrice: number;
+}

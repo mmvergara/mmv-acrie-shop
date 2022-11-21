@@ -35,11 +35,6 @@ export class userModel {
     }
   }
 
-  async destroy() {
-    if (!this.id) throw new Error("This model have not been saved in the database yet");
-    return await postgrePool.query(`DELETE FROM users WHERE id = ${this.id}`);
-  }
-
   static async findByEmail(email: string) {
     return await postgrePool.query(`SELECT * FROM users WHERE email = '${email}'`);
   }
@@ -48,7 +43,12 @@ export class userModel {
     return await postgrePool.query(`SELECT * FROM users WHERE username = '${username}'`);
   }
 
-  static async findById(id: number) {
-    return await postgrePool.query(`SELECT * FROM users WHERE id = '${id}'`);
+  static async findById(userId: number) {
+    return await postgrePool.query(`SELECT * FROM users WHERE id = '${userId}'`);
+  }
+
+  static async changeUserPicByUserId(userId: number, new_pic_url: string) {
+    const q = `UPDATE users SET userpic_url = '${new_pic_url}' WHERE id = ${userId}`;
+    return await postgrePool.query(q);
   }
 }

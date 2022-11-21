@@ -14,7 +14,8 @@ import Checkout from "./sub-components/Checkout";
 
 const CartProducts: React.FC = () => {
   const [cartProductList, setCartProductList] = useState<cartproductDetails[] | []>([]);
-  const [isDoneFetching, setIsDoneFecthing] = useState<boolean>(false);
+  const [isDoneFetching, setIsDoneFecthing] = useState(false);
+  const [checkoutDone, setDoneCheckout] = useState(false);
   const { isLoadingEl, setIsLoading } = useLoading(true, "Getting Cart Products");
   const { isLoadingEl: isLoadingUpdate, setIsLoading: setIsLoadingUpdate } = useLoading(
     false,
@@ -27,7 +28,10 @@ const CartProducts: React.FC = () => {
     setIsLoading(false);
     setIsDoneFecthing(true);
   };
-  const updateCartProducts = async () => {
+  const updateCartProducts = async (isCheckout?: boolean) => {
+    if (isCheckout) {
+      setDoneCheckout(true);
+    }
     const result = await getUserCartProducts();
     setCartProductList(result.data);
   };
@@ -62,15 +66,17 @@ const CartProducts: React.FC = () => {
       {isLoadingUpdate}
       {isLoadingEl}
       <section className='w-screen flex items-center justify-center flex-col'>
-        {cartProductList.length === 0 && isDoneFetching && (
+        {cartProductList.length === 0 && isDoneFetching && !checkoutDone &&(
           <>
             <p className='text-3xl'> You have no cart Items</p>
             <Link to='/'>
-              <button className='bg-pri_orange font-semibold p-4 mt-4'>Shop Now!</button>
+              <button className='bg-pri_orange font-semibold p-4 mt-4  hover:scale-105 transition-all ease-in'>Shop Now!</button>
             </Link>
           </>
         )}
-        {cartProductList.length > 0 && isDoneFetching && <Checkout />}
+        {((cartProductList.length > 0 && isDoneFetching) || checkoutDone) && (
+          <Checkout triggerUpdate={updateCartProducts} />
+        )}
         {cartProductList.map((prod, i) => {
           return (
             <CartProduct

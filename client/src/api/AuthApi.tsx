@@ -1,6 +1,6 @@
 import { AxiosResponse } from "axios";
 import { authInfo } from "../types";
-import { postLoginParams, putSignupParams, standardResponse } from "./ApiTypes";
+import { patchAvatarParams, postLoginParams, putSignupParams, standardResponse } from "./ApiTypes";
 import { AxiosRequest } from "./AxiosInterceptor";
 
 export const postLogin = async (loginData: postLoginParams) => {
@@ -26,4 +26,14 @@ export const postLogout = async () => {
     url: "/auth/signout",
   })) as AxiosResponse<standardResponse<null>>;
   return result;
+};
+
+export const patchUserAvatar = async (data: patchAvatarParams) => {
+  const result = (await AxiosRequest({
+    method: "PATCH",
+    url: "/auth/changeavatar",
+    data,
+  })) as AxiosResponse<standardResponse<null>>;
+  console.log(result.data);
+  return result.data;
 };

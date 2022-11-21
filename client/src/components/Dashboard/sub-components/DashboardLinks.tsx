@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { TiShoppingCart } from "react-icons/ti";
 import { GoListUnordered } from "react-icons/go";
-import { FaUserCog } from "react-icons/fa";
+import { BiUserPin } from "react-icons/bi";
 import { MdAddCircle } from "react-icons/md";
 
 const DashboardLinks = () => {
@@ -29,11 +29,11 @@ const DashboardLinks = () => {
         Add New Product
       </Link>
       <Link
-        to='/usersettings'
-        className='dashboard-links border-x-2 border-lime-700 hover:bg-lime-700 hover:border-none'
+        to='/changeavatar'
+        className='dashboard-links border-x-2 border-green-600 hover:bg-green-600 hover:border-none'
       >
-        <FaUserCog />
-        Change My Settings
+        <BiUserPin />
+        Change Avatar
       </Link>
     </div>
   );

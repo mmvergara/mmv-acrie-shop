@@ -79,7 +79,24 @@ export const postLogout = async (req: req, res: res, next: next) => {
       .send({ statusCode: 200, message: "Logged out successfully", ok: true, data: null });
   });
 };
+export const patchChangeAvatar = async (req: req, res: res, next: next) => {
+  const userId = req.session.userId!;
+  const { password, user_pic_url } = req.body;
+  const result = await userModel.findById(userId);
+  try {
+    if (result.rowCount === 0) throw newError("User not found", 404);
+    const foundUser = result.rows[0] as userInfo;
+    const passwordComparisonResult = await compare(password, foundUser.password);
+    if (!passwordComparisonResult) throw newError("Wrong Password", 422);
+    const changeUserPic = await userModel.changeUserPicByUserId(userId, user_pic_url);
 
-export const testAuth = async (req: req, res: res, next: next) => {
-  res.status(200).send({ msg: "Goods you are logged in" });
+    res.status(200).send({
+      statusCode: 200,
+      message: "Avatar Changed Successfully",
+      ok: true,
+      data: changeUserPic.command,
+    });
+  } catch (error) {
+    next(error);
+  }
 };
