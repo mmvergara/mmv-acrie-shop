@@ -3,9 +3,15 @@ import { productModel } from "../models/productModel";
 import { userModel } from "../models/userModel";
 import { productDetails } from "../types";
 import newError from "../utilities/newError";
+import { addProductSchema } from "./Validation/ValidationSchemas";
 
 export const addProduct = async (req: req, res: res, next: next) => {
   const { prod_name, prod_price, prod_description, prod_pic_url } = req.body;
+  const { error } = addProductSchema.validate(req.body)
+  if (error) {
+    next(newError("Invalid request", 422));
+    return;
+  }
   const userAddingTheProduct = await userModel.findById(req.session.userId!);
   const userIdDb = userAddingTheProduct.rows[0].id;
 
