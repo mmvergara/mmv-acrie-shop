@@ -3,7 +3,7 @@ import { Routes, Route } from "react-router-dom";
 import { useAuth } from "./context/AuthContext";
 import { lazy, Suspense } from "react";
 import HomePage from "./pages/HomePage";
-import SideNavBar from "./layout/SideNavbar";
+import SideNavBar from "./components/layout/SideNavbar";
 import AuthPage from "./pages/AuthPage";
 import CartsPage from "./pages/CartsPage";
 import ProductDetailsPage from "./pages/ProductDetailsPage";
@@ -22,7 +22,7 @@ const App = () => {
       <SideNavBar />
       <main>
         <ToastREACT />
-        <Suspense fallback={<LoadingSnackBar loadingMessage="Loading..."/>}>
+        <Suspense fallback={<LoadingSnackBar loadingMessage='Loading...' />}>
           <Routes>
             <Route path='/' element={<HomePage />} />
             <Route path='/auth' element={<AuthPage />} />

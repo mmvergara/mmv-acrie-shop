@@ -7,8 +7,8 @@ import { MdAddCircle } from "react-icons/md";
 import { motion } from "framer-motion";
 import { useEffect } from "react";
 import SidebarIcon from "./SidebarIcon";
-import { postLogout } from "../../api/AuthApi";
-import { useAuth } from "../../context/AuthContext";
+import { postLogout } from "../../../api/AuthApi";
+import { useAuth } from "../../../context/AuthContext";
 import { toast } from "react-toastify";
 
 interface props {
