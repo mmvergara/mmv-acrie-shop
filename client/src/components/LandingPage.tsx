@@ -5,8 +5,8 @@ const LandingPage: React.FC = () => {
     <motion.section
       animate={{
         opacity: [0, 1],
-        rotateX: [150, 360],
-        rotateY: [150, 360],
+        rotateX: [380, 360],
+        rotateY: [380, 360],
       }}
       className=' mx-auto flex align-center justify-center '
     >
@@ -14,13 +14,11 @@ const LandingPage: React.FC = () => {
         <h1 className='text-3xl mb-4'>Welcome to Acrie Shop</h1>
         <p className='mb-4'>
           Acrie Shop is a web app made by: Vergara, Mark Matthew. <br /> Simulating a E-commerce
-          website to practice <br /> <br />
-          React w/TS, NodeJS w/TS, jsPDF, Image APIS&quot;s,
-          <br /> Tailwind CSS, Framer Motion
-          <br /> and most importantly PostgreSQL
-          <br />
-          <br /> without using any ORM like Sequalize. <br /> It features self-made models for the
-          database queries.
+          website to practice React w/TS, NodeJS w/TS, jsPDF, Image API&quot;s, Tailwind CSS, Framer
+          Motion and most importantly PostgreSQL without using any ORM like Sequalize. <br /> It
+          features self-made models for the database queries. <br /> <br />
+          note: this website uses free db service and at every 20th+ of the month the server might
+          be down
         </p>
         <Link to='/auth'>
           <button className='auth-button bg-pri_orange hover:scale-105 transition-all ease-in'>
