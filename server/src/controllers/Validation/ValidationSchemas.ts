@@ -5,7 +5,7 @@ const username = Joi.string().min(6).max(30).required();
 
 const prod_name = Joi.string().min(6).max(30).required();
 const prod_description = Joi.string().min(6).max(600).required();
-const prod_price = Joi.string().min(6).max(600).required();
+const prod_price = Joi.number().required()
 const prod_pic_url = Joi.string().required();
 
 export const patchChangeAvatarSchema = Joi.object({
