@@ -47,7 +47,7 @@ const Checkout: React.FC<props> = ({ triggerUpdate }: props) => {
           >
             Download Checkout Order PDF
           </motion.button>
-          <h2 className='text-3xl text-center'>Thank you for Shopping with Acie Shop!</h2>
+          <h2 className='text-3xl text-center'>Thank you for Shopping with Acrie Shop!</h2>
           <Link to='/'>
             <button className='bg-pri_orange font-semibold p-4 mt-4 hover:scale-105 transition-all ease-in'>
               Shop Again!
