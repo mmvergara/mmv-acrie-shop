@@ -35,7 +35,7 @@ app.use(
   expressSession({
     name: "acrie-shop-session-store",
     secret: EXPESS_SESSION_KEY,
-    cookie: { maxAge: 1200000 },
+    cookie: { maxAge: 1200000, httpOnly: true, secure: true, sameSite: "none" },
     resave: false,
     saveUninitialized: false,
     store: pgSessionStore,
@@ -59,4 +59,3 @@ const port = PORT || 3000;
 app.listen(PORT || 3000, () => {
   console.log(`Listening to port ${port}`);
 });
-
