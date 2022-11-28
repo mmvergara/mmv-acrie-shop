@@ -7,6 +7,7 @@ import { toast } from "react-toastify";
 import { postLogin } from "../../api/AuthApi";
 import { useNavigate } from "react-router-dom";
 import useLoading from "../../hooks/useLoading";
+import DummyAccount from "../DummyAccount";
 
 const SigninBox: React.FC<authProps> = ({ changeMethod }: authProps) => {
   const auth = useAuth();
@@ -31,8 +32,8 @@ const SigninBox: React.FC<authProps> = ({ changeMethod }: authProps) => {
 
   const formik = useFormik({
     initialValues: {
-      SigninEmail: "salt2@gmail.com",
-      SigninPassword: "salt1234",
+      SigninEmail: "",
+      SigninPassword: "",
     },
     validationSchema: SigninSchema,
     onSubmit: signInHandler,
@@ -87,6 +88,7 @@ const SigninBox: React.FC<authProps> = ({ changeMethod }: authProps) => {
         >
           Create Account
         </button>
+        <DummyAccount/>
       </motion.div>
     </>
   );
