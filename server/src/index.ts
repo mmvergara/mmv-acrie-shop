@@ -4,6 +4,7 @@ import cors from "cors";
 import cookieParser from "cookie-parser";
 import expressSession from "express-session";
 import pg_simple from "connect-pg-simple";
+
 //Middlewares
 import ErrorHandling from "./middleware/ErrorHandling";
 

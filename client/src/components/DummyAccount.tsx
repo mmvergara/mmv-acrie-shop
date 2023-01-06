@@ -1,7 +1,7 @@
 import { useState } from "react";
 
 const DummyAccount: React.FC = () => {
-  const [accIsShown, setAccIsShown] = useState(false);
+  const [accIsShown, setAccIsShown] = useState<boolean>(false);
   const showDummyAcc = () => setAccIsShown((prev) => !prev);
 
   return (
@@ -13,6 +13,9 @@ const DummyAccount: React.FC = () => {
       ) : (
         <p style={{ padding: "1em", cursor: "pointer" }} onClick={showDummyAcc}>
           Dummy Account here
+          <p className='bg-white opacity-50 text-red-700 font-bold'>
+            note: this website uses free postgre  db service and at every 20th+ of the month the server might be down
+          </p>
         </p>
       )}
     </>

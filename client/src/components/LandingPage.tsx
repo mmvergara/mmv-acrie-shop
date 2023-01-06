@@ -16,9 +16,7 @@ const LandingPage: React.FC = () => {
           Acrie Shop is a web app made by: Vergara, Mark Matthew. <br /> Simulating a E-commerce
           website to practice React w/TS, NodeJS w/TS, jsPDF, Image API&quot;s, Tailwind CSS, Framer
           Motion and most importantly PostgreSQL without using any ORM like Sequalize. <br /> It
-          features self-made models for the database queries. <br /> <br />
-          note: this website uses free db service and at every 20th+ of the month the server might
-          be down
+          features self-made models for the database queries. <br /> 
         </p>
         <Link to='/auth'>
           <button className='auth-button bg-pri_orange hover:scale-105 transition-all ease-in'>
