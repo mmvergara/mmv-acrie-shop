@@ -3,7 +3,7 @@
 - Release Date: November 18, 2022
 - https://mmv-acrie-shop.vercel.app/
 
-Acrie Shop is a web app made by: Vergara, Mark Matthew.
+Acrie Shop:
 Simulating a E-commerce website to practice React w/TS, NodeJS w/TS, jsPDF, Image APIS"s,
 Tailwind CSS, Framer Motion and most importantly PostgreSQL, without using any ORM like Sequalize.
 It features self-made models for the database queries.
